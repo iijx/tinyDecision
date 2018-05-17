@@ -1,0 +1,12 @@
+<view class="container">
+    <view class="header">
+        <image mode="widthFix" class="img" src="../../assets/imgs/logo.png" />
+        <view class="text">小决定助手</view>
+        <view class="content">
+            <view class="text"><text selectable="true">你的专属选择助手，终结你的“选择困难症”。</text></view>
+        </view>
+    </view>
+    <view class="footer">
+        <view>All Rights Reserved.</view> 
+    </view>
+</view>

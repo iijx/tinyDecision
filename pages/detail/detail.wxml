@@ -1,0 +1,20 @@
+<view class="container">
+    <view class="title">{{info.question}}</view>
+    <view class="answer">{{info.resolvedValue || '???'}}</view>
+    <view wx:if="{{info.isResolved}}" class="resolvedTime">( -{{computed.showResolvedTime(info.resolvedAt)}}- )</view>
+    <view class="canvas-wrap">
+        <canvas  class="canvas" canvas-id="canvas-bg" style="width: 300px; height: 300px;"></canvas>
+        <canvas  class="canvas" canvas-id="canvas-pointer" style="width: 300px; height: 300px;"></canvas>
+    </view>
+    <view class="turnable-wrap">
+        <image class="img" animation="{{animationData}}" src="{{img}}" />
+        <image class="pointer-img" bindtap="startLottery" src="{{pointerImg}}" />
+    </view>
+</view>
+
+<wxs module="computed">
+module.exports.showResolvedTime = function(time) {
+    var date = getDate(time);
+    return (date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日');
+}
+</wxs>

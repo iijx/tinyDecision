@@ -1,0 +1,31 @@
+.container {
+    padding: 60rpx 18rpx;
+}
+.input-wrap {
+    background: #fff;
+    height: 100rpx;
+    border-radius: 5px;
+    padding-left: 20rpx;
+    margin-bottom: 30rpx;
+    display: flex;
+    align-items: center;
+}
+.input-wrap.question {
+    margin-bottom: 60rpx;
+}
+.input-wrap .icon {
+    width: 58rpx;
+    height: 58rpx;
+    display: block;
+    margin-right: 14rpx;
+}
+.input-wrap .input {
+    height: 100%;
+    line-height: 100rpx;
+    display: block;
+    flex: 1;
+}
+.add-option {
+    margin-bottom: 100rpx;
+    text-align: left;
+}
