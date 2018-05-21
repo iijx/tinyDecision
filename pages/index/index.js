@@ -19,6 +19,8 @@ Page({
             isResolved: item.isResolved,
             resolvedValue: item.resolvedValue || undefined,
             sortedTime: item.resolvedTime || item.updatedAt,
+            maxLotteryTimes: item.maxLotteryTimes,
+            lotteriedTimes: item.lotteriedTimes
         }
     },
     showTimeFormat(time) {
@@ -62,6 +64,8 @@ Page({
                 id: 0,
                 question: '那明日，我们还会再见吗？',
                 options: ['会', '不会'],
+                maxLotteryTimes: -1,
+                lotteriedTimes: 0,
                 updatedAt: Date.now(),
                 createdAt: Date.now(),
                 isResolved: false,

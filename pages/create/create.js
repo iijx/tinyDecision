@@ -54,6 +54,8 @@ Page({
         Api.addQuestion({
             question: this.data.question,
             options: Util.iFilter(this.data.options, item => item !== ''),
+            maxLotteryTimes: 1,
+            lotteriedTimes: 0,
         }).then( res => {
             // 本地保存
             res.result.id = Storer.QuestionList.length;

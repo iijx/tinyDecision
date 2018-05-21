@@ -9,6 +9,7 @@
             <input class="input" value="{{item}}" bindinput="optionInput" data-index="{{index}}" name="" placeholder="option"/>
         </view>
         <button type="defautl" bindtap="addOption" class="add-option" hover-class="other-button-hover"> 增加一项 </button>
-        <button type="primary" form-type="submit" disabled="{{!canSubmit}}" loading="{{submitLoading}}" hover-class="other-button-hover"> 好了，创建 </button>
+        <button type="primary" form-type="submit" disabled="{{!canSubmit}}" 
+                loading="{{submitLoading}}" hover-class="other-button-hover"> 好了，创建 </button>
     </form>
 </view>

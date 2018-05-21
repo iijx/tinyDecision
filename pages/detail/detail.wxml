@@ -15,6 +15,6 @@
 <wxs module="computed">
 module.exports.showResolvedTime = function(time) {
     var date = getDate(time);
-    return (date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日');
+    return ((date.getMonth() + 1) + '月' + date.getDate() + '日');
 }
 </wxs>

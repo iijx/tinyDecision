@@ -86,41 +86,69 @@ Page({
             },
         });
     },
-    startLottery() {
-        if(this.data.isLottering || this.data.info.isResolved) return;
-        wx.vibrateShort();
-
-        this.data.isLottering = true;
-
-        var animation = wx.createAnimation({
-            duration: 6000,
-            timingFunction: 'ease',
+    lotteryAnimationReset() {
+        let animation = wx.createAnimation({
+            duration: 0,
         });
-        let resultAngle = (20 + Math.random()) * 360;
-        animation.rotate(resultAngle).step();
+        let lastAngle = this.data.info.resolvedAngle || 0;
+        lastAngle = parseInt(lastAngle % 360);
+
+        animation.rotate(lastAngle).step();
         this.setData({
             animationData: animation.export()
         })
-        let that = this;
-        // 6s 后震动，并显示答案
-        setTimeout( () => {
-            wx.vibrateLong();
-            // let res = parseInt(resultAngle % 360);
-            // // 根据相对性，转盘的转动可以看成是指针旋转了，并算出具体角度
-            // let pointRotateAngle = (270 + (360 - res))%360;
-            // let perAngle = 360 / this.staticData.options.length;
-            // let lotteryRes = this.staticData.options[parseInt(pointRotateAngle / perAngle)];
-            this.setData({
-                info: this.data.info
+    },
+    startLottery() {
+        let info = this.data.info;
+        if (this.data.isLottering) return;
+        if (info.maxLotteryTimes !== -1 && info.maxLotteryTimes <= info.lotteriedTimes ) {
+            wx.showToast({
+                title: '无抽取机会',
             })
-        }, 6000)
-        // 答案处理
+            return;
+        }
+        // 动画归位
+        this.lotteryAnimationReset();
 
-        this.answerHandler(resultAngle);
+        setTimeout(() => {
+
+            wx.vibrateShort();
+
+            this.data.isLottering = true;
+
+            var animation = wx.createAnimation({
+                duration: 6000,
+                timingFunction: 'ease',
+            });
+            let resultAngle = (20 + Math.random()) * 360;
+            console.log('此次转动 resultAngle', resultAngle)
+            animation.rotate(resultAngle).step();
+            this.setData({
+                animationData: animation.export()
+            })
+            let that = this;
+            // 6s 后震动，并显示答案
+            setTimeout( () => {
+                wx.vibrateLong();
+                this.data.isLottering = false;
+                // let res = parseInt(resultAngle % 360);
+                // // 根据相对性，转盘的转动可以看成是指针旋转了，并算出具体角度
+                // let pointRotateAngle = (270 + (360 - res))%360;
+                // let perAngle = 360 / this.staticData.options.length;
+                // let lotteryRes = this.staticData.options[parseInt(pointRotateAngle / perAngle)];
+                this.setData({
+                    info: this.data.info
+                })
+            }, 6000)
+            // 答案处理
+
+            this.answerHandler(resultAngle);
+        }, 100);
     },
     answerHandler(answerAngle) {
         let info = this.data.info;
         info.isResolved = true;
+        info.lotteriedTimes += 1;
         info.resolvedAt = Date.now();
         
         // 根据相对性，转盘的转动可以看成是指针旋转了，并算出具体角度
@@ -137,7 +165,10 @@ Page({
         curData.resolvedValue = answer;
         curData.isResolved = true;
         curData.resolvedAt = Date.now();
+        curData.lotteriedTimes += 1;
+
         Storer.setData('QuestionList');
+        
         
         
     },
