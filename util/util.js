@@ -191,21 +191,12 @@ const iFilter = (data, fn) => {
 }
 
 const isToday = _date => {
-    let date;
-    if (typeof _date === 'number') date = new Date(_date);
-    else if (typeof date === 'string') date = new Date(Number(_date));
-    else date = _date;
+    let date = new Date(_date);
 
     return date.toDateString() === (new Date()).toDateString();
 }
 const isYestday = _date => {
-    let date;
-    if (typeof _date === 'number') date = new Date(_date);
-    else if (typeof _date === 'string') date = new Date(Number(_date));
-    else {
-        date = _date;
-    }
-    console.log('date', date)
+    let date = new Date(_date);
     let curDate = new Date();
     let todayStart = new Date(curDate.getFullYear(), curDate.getMonth(), curDate.getDate()).getTime();
     let yestdayStart = new Date(todayStart - 24 * 3600 * 1000).getTime();

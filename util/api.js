@@ -1,29 +1,46 @@
 import {Request} from './request';
+import Storer from './storage.js';
 
 class Api extends Request {
     constructor(baseUrl) {
         super(baseUrl)
     }
-   
+
     getCopyData() {
         return this.request({
             url: 'copyData',
         })
     }
+   
+    getQuestionList() {
+        return this.get('/question')
+            .then(res => {
+                return res.result;
+            })
+        // return new Promise((resolve, reject) => {
+        //     if (Storer.QuestionList.length <= 0) {
+        //         this.get('/question')
+        //             .then(res => {
+        //                 resolve(res.result);
+        //             })
 
-    addQuestion(opt) {
-        opt.updatedAt = opt.createdAt = Date.now();
-        opt.isResolved = false;
-        return Promise.resolve({
-            success: true,
-            result: opt,
-        })
-        // return this.request({
-
+        //     } else resolve(Storer.QuestionList);
         // })
     }
 
-
+    addQuestion(opt) {
+        // opt.updatedAt = opt.createdAt = Date.now();
+        // opt.isResolved = false;
+        // return Promise.resolve({
+        //     success: true,
+        //     result: opt,
+        // })
+        return this.request({
+            url: '/question',
+            data: opt,
+        })
+    }
+    
 }
 
 export default Api

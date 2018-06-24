@@ -1,0 +1,12 @@
+<!--pages/tpl/tpl.wxml-->
+<view class="container">
+    <view class="tpl-list">
+        <view class="item" wx:for="{{tplList}}" wx:key="{{item.id}}" bindtap="itemTap" data-id="{{item.id}}">
+            <view class="left-line" style="background:#52c41a"></view>
+            <view class="question">{{item.question}}</view>
+        </view>
+        <view class="add-wrap">
+            <button type="primary" size="default"  plain="true" bindtap="pageToCreate" hover-class="defaultTap">新建模板</button>
+        </view>
+    </view>
+</view>

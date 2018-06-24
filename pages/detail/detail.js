@@ -1,9 +1,7 @@
-const { Storer, Util } = getApp();
+const { Storer, Api, Util, XData, Config } = getApp();
 Page({
     staticData: {
-        // color: ['#8ad4fa', '#f36c60', '#4db6ac', '#d4e157', '#ba68a8', '#00ba31', '#00a7ce', '#f1b731', '#dc1846'],
-        color: ['#ef5350', '#ffa626', '#ffca28', '#66ba6a', '#42a5f5', '#5c6bc0', '#ab47bc', '#ec407a', '#dc1846'],
-        dataIndex: -1,
+        // color: ['#ef5350', '#ffa626', '#ffca28', '#66ba6a', '#42a5f5', '#5c6bc0', '#ab47bc', '#ec407a', '#dc1846'],
     },
     data: {
         info: {
@@ -15,18 +13,19 @@ Page({
         pointerImg: '',
     },
     getInitData(opt) {
-        let id = Number(opt.id);
-        let index = Util.iFind(Storer.QuestionList, item => item.id === id)
-        console.log('id is ', opt.id, typeof id,  index);
+        let { questions } = XData.getState();
+        let index = Util.iFind(questions, item => item.id === opt.id);
+        let info = {...questions[index]};
+
         // 没找到
         if (index === -1) { return; }
         // 找到了
-        this.staticData.dataIndex = index;
-        let info = Storer.QuestionList[index];
-        this.staticData.options = info.options;
+        
         this.setData({
             info: info,
         });
+
+        // 如果已经决议了，就动画到决议角度
         if ( info.isResolved ) {
             var animation = wx.createAnimation({
                 duration: 10,
@@ -46,14 +45,16 @@ Page({
         })
         setTimeout(() => {
             this.canvasDraw();
-            this.canvasPointerDraw();
-            setTimeout(() => {
-                this.canvas2Img();
+            setTimeout( () => {
+                this.canvasPointerDraw();
                 setTimeout(() => {
-                    wx.hideLoading();
-                }, 200);
-            }, 300)
-        }, 100)
+                    this.canvas2Img();
+                    setTimeout(() => {
+                        wx.hideLoading();
+                    }, 200);
+                }, 300)
+            }, 200)
+        }, 300)
     },
     canvas2Img() {
         let that = this;
@@ -66,7 +67,6 @@ Page({
                 wx.canvasToTempFilePath({
                     canvasId: 'canvas-bg',
                     success: function (res) {
-                        console.log('canvas-bg success to img')
                         that.setData({
                             img: res.tempFilePath
                         })
@@ -79,7 +79,6 @@ Page({
                 });
             },
             fail: function () {
-                console.log(22);
                 wx.showToast({
                     title: '保存失败'
                 });
@@ -111,16 +110,14 @@ Page({
         this.lotteryAnimationReset();
 
         setTimeout(() => {
-
             wx.vibrateShort();
-
             this.data.isLottering = true;
 
             var animation = wx.createAnimation({
                 duration: 6000,
                 timingFunction: 'ease',
             });
-            let resultAngle = (20 + Math.random()) * 360;
+            let resultAngle = parseInt((20 + Math.random()) * 360);
             console.log('此次转动 resultAngle', resultAngle)
             animation.rotate(resultAngle).step();
             this.setData({
@@ -149,28 +146,33 @@ Page({
         let info = this.data.info;
         info.isResolved = true;
         info.lotteriedTimes += 1;
-        info.resolvedAt = Date.now();
+        info.resolvedAt = new Date();
         
         // 根据相对性，转盘的转动可以看成是指针旋转了，并算出具体角度
         answerAngle = parseInt(answerAngle % 360);
-        let pointRotateAngle = (270 + (360 - answerAngle))%360;
-        let perAngle = 360 / this.staticData.options.length;
-        let answer = this.staticData.options[parseInt(pointRotateAngle / perAngle)];
+        let pointRotateAngle = (270 - answerAngle);
+        pointRotateAngle = pointRotateAngle < 0 ? pointRotateAngle + 360 : pointRotateAngle;
+        let perAngle = 360 / info.options.length;
+        console.log('point', pointRotateAngle, info)
+        let answer = info.options[parseInt(pointRotateAngle / perAngle)];
 
         info.resolvedValue = answer;
         info.resolvedAngle = answerAngle;
 
-        let curData = Storer.QuestionList[this.staticData.dataIndex];
-        curData.resolvedAngle = answerAngle;
-        curData.resolvedValue = answer;
-        curData.isResolved = true;
-        curData.resolvedAt = Date.now();
-        curData.lotteriedTimes += 1;
+        let { questions } = XData.getState();
+        let index = Util.iFind(questions, item => item.id === this.data.info.id);
+        
+        let result = {...info, options: questions[index].options};
+        questions[index] = result;
+        XData.dispatch({
+            type: 'CHANGE_QUESTIONS',
+            value: questions
+        });
 
-        Storer.setData('QuestionList');
-        
-        
-        
+        Api.put('/question', result)
+            .then( res => {
+                console.log('put success', res)
+            })
     },
     onShow() {
     },
@@ -219,15 +221,17 @@ Page({
         ctx.stroke();
         ctx.draw(true);
 
-        // 区域划分
-        while( this.staticData.options.length < 6 ) {
-            this.staticData.options = this.staticData.options.concat(this.staticData.options);
+        //区域划分
+        let options = this.data.info.options;
+        while (options.length < Config.turntable.minBlock ) {
+            options = options.concat(options);
         }
-        let minDivide = this.staticData.options.length;
+        this.data.info.options = options;
+        let minDivide = options.length;
         let perAngle = 2 * Math.PI / minDivide;
         let curStartAngle = perAngle;
-        for (let i = 0; i < this.staticData.options.length; i++) {
-            ctx.setFillStyle(this.staticData.color[i]);
+        for (let i = 0; i < options.length; i++) {
+            ctx.setFillStyle(Config.turntable.colors[i]);
             ctx.beginPath();
             ctx.moveTo(150, 150);
             ctx.arc(150, 150, 136, curStartAngle, curStartAngle + perAngle);
@@ -239,18 +243,24 @@ Page({
         // 文字
         ctx.translate(150, 150);
         // this.staticData.options.length
-        for (let i = 0; i < this.staticData.options.length; i++) {
+        for (let i = 0; i < options.length; i++) {
             ctx.setFillStyle('#fff');
             ctx.setFontSize(16);
             if (i === 0) ctx.rotate(perAngle / 2);
             else ctx.rotate(perAngle);
             // 此次绘制的文字
-            let text = this.staticData.options[i];
+            let text = options[i];
             text = text.length > 4 ? text.slice(0, 3) : text;
             // x坐标
             let x = 120 - text.length * 16;
             ctx.fillText(text, x, 6);
             ctx.draw(true);
         }
-    }
+    },
+    onShareAppMessage: function (res) {
+        return {
+            path: '/pages/index/index',
+            title: '做个小决定...',
+        }
+    },
 })

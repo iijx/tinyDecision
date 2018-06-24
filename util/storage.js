@@ -49,29 +49,31 @@ class Storage {
     }
     initData() {
         this.QuestionList = this.getStorageSync('QuestionList') || [];
-        this.IsHandledQuestionList_1_0_6 = this.getStorageSync('IsHandledQuestionList_1_0_6') || false;
-        if (this.IsHandledQuestionList_1_0_6 + '' === 'false') {
-            this.handlerQuestionList_1_0_6(this.QuestionList);
+        if (this.QuestionList.length > 0) {
+            let index = this.QuestionList.findIndex( item => item.id + '' === '0');
+            this.QuestionList.splice(index, 1);
 
-            this.IsHandledQuestionList_1_0_6 = true;
-            this.setData('IsHandledQuestionList_1_0_6');
         }
+        console.log('cur storer\'s questions', this.QuestionList);
+        
+        this.Token = this.getStorageSync('Token') || '';
+        Storer.CurStoreDataVersion = this.getStorageSync('CurStoreDataVersion') || '';
     }
-    /* v1.0.6 版本 数据清理 
-    *  添加 maxLotteryTimes 字段 和 lotteriedTimes 字段
-    */
-    handlerQuestionList_1_0_6( list ) {
-        console.log(this.QuestionList)
-        list.forEach( item => {
-           if (item.id === 0) {
-               item.maxLotteryTimes = -1;
-               item.lotteriedTimes = item.isResolved ? 1 : 0;
-           } else {
-               item.maxLotteryTimes = item.maxLotteryTimes || 1;
-               item.lotteriedTimes = item.isResolved ? 1 : 0;
-           }
-        })
-    }
+    // /* v1.0.6 版本 数据清理 
+    // *  添加 maxLotteryTimes 字段 和 lotteriedTimes 字段
+    // */
+    // handlerQuestionList_1_0_6( list ) {
+    //     console.log(this.QuestionList)
+    //     list.forEach( item => {
+    //        if (item.id === 0) {
+    //            item.maxLotteryTimes = -1;
+    //            item.lotteriedTimes = item.isResolved ? 1 : 0;
+    //        } else {
+    //            item.maxLotteryTimes = item.maxLotteryTimes || 1;
+    //            item.lotteriedTimes = item.isResolved ? 1 : 0;
+    //        }
+    //     })
+    // }
 
 
 
