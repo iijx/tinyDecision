@@ -39,5 +39,6 @@ export default {
     ...envConf
 }
 
+console.log('this is master1')
 
 
