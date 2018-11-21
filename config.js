@@ -1,8 +1,8 @@
 
 
 // const env = 'DEV'; // PROD || DEV
-const env = 'UAT'; // PROD || DEV
-// const env = 'PROD'; // PROD || DEV
+// const env = 'UAT'; // PROD || DEV
+const env = 'PROD'; // PROD || DEV
 const uatConf = {
     baseUrl: 'http://192.168.1.3:3008/tinydec/api'
 }
