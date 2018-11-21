@@ -40,5 +40,6 @@ export default {
 }
 
 console.log('this is master1')
+console.log('this is dev1')
 
 
