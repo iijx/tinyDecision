@@ -35,6 +35,7 @@ exports.main = async (event, context) => {
                     }
                 }
             });
+            
             return userData;
         }
     } catch (error) {
