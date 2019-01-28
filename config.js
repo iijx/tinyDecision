@@ -6,7 +6,8 @@ const env = 'DEV'; // PROD || DEV
 const uatConf = {
     // baseUrl: 'http://192.168.1.3:3008/tinydec/api'
     baseUrl: 'http://192.168.1.3:3009'
-} 
+}
+
 
 // 开发环境相关配置 
 const devConf = {
