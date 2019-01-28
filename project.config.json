@@ -1,5 +1,6 @@
 {
 	"description": "项目配置文件。",
+    "cloudfunctionRoot": "cloudfunctions/",
 	"packOptions": {
 		"ignore": []
 	},
@@ -33,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
@@ -46,6 +47,18 @@
 					"name": "question create",
 					"pathName": "pages/create/create",
 					"query": "type=question"
+				},
+				{
+					"id": -1,
+					"name": "public",
+					"pathName": "pages/public/public",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "music",
+					"pathName": "pages/music/music",
+					"query": ""
 				}
 			]
 		}

@@ -8,10 +8,13 @@ class Storage {
 
     }
     getStorageSync(key) {
-        try {
-            return wx.getStorageSync(key);
-        } catch (error) {
-            return undefined;
+        if ( this[key] !== undefined ) return this[key];
+        else {
+            try {
+                return this[key] =  wx.getStorageSync(key);
+            } catch (error) {
+                return undefined;
+            }
         }
     }
     getStorage(key, success, fail, complete) {
@@ -30,6 +33,7 @@ class Storage {
         }
     }
     setStorage(key, value) {
+        this[key] = value;
         try {
             wx.setStorage({
                 key:key,
@@ -47,33 +51,17 @@ class Storage {
     }
     removeStorageSync(key) {
     }
+    // 将本地存储的变量，获取出来，存至全局 Store 中，方便后续获取
     initData() {
-        this.QuestionList = this.getStorageSync('QuestionList') || [];
-        if (this.QuestionList.length > 0) {
-            let index = this.QuestionList.findIndex( item => item.id + '' === '0');
-            this.QuestionList.splice(index, 1);
-
-        }
-        console.log('cur storer\'s questions', this.QuestionList);
-        
-        this.Token = this.getStorageSync('Token') || '';
-        Storer.CurStoreDataVersion = this.getStorageSync('CurStoreDataVersion') || '';
+        // token
+        this.Token = this.getStorageSync('Token') || ''; 
+        // 最近一次 token 存储时间
+        this.LastSaveTokenTime = this.getStorageSync('LastSaveTokenTime') || ''; 
+        // 复制时间
+        this.CopyTodayInfo = this.getStorageSync('CopyTodayInfo') || ''; 
+        // 本地数据版本号
+        Storer.CurStoreDataVersion = this.getStorageSync('CurStoreDataVersion') || ''; 
     }
-    // /* v1.0.6 版本 数据清理 
-    // *  添加 maxLotteryTimes 字段 和 lotteriedTimes 字段
-    // */
-    // handlerQuestionList_1_0_6( list ) {
-    //     console.log(this.QuestionList)
-    //     list.forEach( item => {
-    //        if (item.id === 0) {
-    //            item.maxLotteryTimes = -1;
-    //            item.lotteriedTimes = item.isResolved ? 1 : 0;
-    //        } else {
-    //            item.maxLotteryTimes = item.maxLotteryTimes || 1;
-    //            item.lotteriedTimes = item.isResolved ? 1 : 0;
-    //        }
-    //     })
-    // }
 
 
 

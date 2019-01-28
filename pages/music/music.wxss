@@ -1,0 +1,193 @@
+/* pages/music/music.wxss */
+.cover {
+    position: relative;
+    width: 750rpx;
+    height: 750rpx;
+    background-size: 100% 100%;
+}
+
+.cover-mask {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* height: 540rpx; */
+    background: rgba(0, 0, 0, .3); 
+}
+.cover-blur {
+    position: absolute;
+    top: 0rpx; left: 0; right: 0; bottom: 0;
+    background-size: 100% auto;
+    background-color: transparent;
+    background-attachment: fixed;
+    filter: blur(4px); 
+}
+.record-wrap {
+    position: absolute;
+    top: 650rpx; 
+    left: 0;
+    right: 0;
+    height: 200rpx;
+}
+.record-wrap-active {
+
+    background: rgba(0, 0, 0, .9);
+}
+.record-blur {
+    position: absolute;
+
+}
+.record-btn {
+    padding: 4rpx; 
+    width: 100rpx;
+    height: 100rpx;
+    border: 4px solid #ddd;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+}
+.record-btn-inner {
+    width: 100%;
+    height: 100%;
+    background: #ff0000;
+    border-radius: 50%;
+    margin: 0 auto;
+    transition: all .3s ease-in;
+}
+.record-btn-inner-recording {
+    width: 56%;
+    height: 56%;
+    border-radius: 8rpx;
+}
+.record-time {
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    line-height: 2.6;
+}
+.record-operators {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.record-img {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: block;
+}
+.record-play_pause_img {
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+}
+.record-upload {
+    width: 100rpx;
+    /* text-align: center; */
+    /* background: rgba(0, 0, 0, 1); */
+    /* color: #fff; */
+    color: #8a8a8a;
+    font-size: 13px;
+}
+.record-upload button {
+    /* background: rgba(0, 0, 0, 1); */
+    color: #fff;
+
+}
+.slider-wrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+}
+.slider {
+    flex: 1;
+}
+
+.slider-wrap .text {
+    color: #fff;
+}
+.lyrics {
+    position: absolute;
+    top: 20%;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 1px;
+}
+.source {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 12px;
+}
+
+
+.recorder-list {
+    border-top: 1rpx solid #999;
+}
+.record-item {
+    border-bottom: 1rpx solid #999;
+    display: flex;
+    padding: 10px 0 10px 10px;
+    align-items: center;
+}
+.avatar {
+     width: 68rpx; 
+     height: 68rpx; 
+    display: block;
+    border-radius: 50%;
+}
+.nickname {
+    flex: 1;
+    margin-left: 10rpx;
+}
+.record-likeinfo {
+    width: 100rpx;
+    display: flex;
+    flex-direction: column;
+}
+.record-likeinfo .icon {
+    width: 50rpx;
+    height:50rpx;
+}
+.record-likeinfo .text {
+    font-size: 12px;
+}
+
+.next-note {
+    font-size: 12px;
+    text-align: right;
+    color: #999;
+    padding: 20px 0;
+}
+.like {
+    position: absolute;
+    width: 60rpx;
+    height: 60rpx;
+    top: 0;
+    right: 0;
+}
+.item-mask {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    background: rgba(0, 0, 0, .7);
+}
+.item-btns {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.item-btns .img-btn {
+    /* flex: 1; */
+    /* width:  */
+    width: 100rpx;
+    height: 100rpx;
+}

@@ -1,4 +1,13 @@
 import Storer from './storage.js';
+import { config } from '../config.js';
+
+const noTokenApi = ['/isCopy'];
+const TokeExpireTime = 86400000; // (86400000 = 24 * 60 * 60 * 1000 一天 )
+
+const apiRequestNeedToken = (url) => noTokenApi.findIndex(item => item === url) === -1;
+const tokenIsExpire = () => {
+    return !Storer.Token || (Storer.LastSaveTokenTime && (Date.now() - Storer.LastSaveTokenTime) > TokeExpireTime)
+}
 
 class Request {
     constructor(opt) {
@@ -11,27 +20,35 @@ class Request {
     // 静默登录，code换token
     getToken(getFromServer = false) {
         let that = this;
+
         if (Storer.Token && getFromServer === false) return Promise.resolve({ token: Storer.Token });
         else {
-            return new Promise((resolve, reject) => {
-                wx.login({
-                    success: function (res) {
-                        if (res.code) {
-                            that.request({ url: '/login', data: { code: res.code } })
-                                .then(res => {
-                                    console.log('login 123', res);
-                                    if (res.success) {
-                                        Storer.Token = res.result.token;
-                                        Storer.setData('Token');
-                                        that.token = res.result.token || ''; // 存起来
-                                        resolve(res.result);
-                                    }
-                                })
-                                .catch(err => console.log(err || 'register error'));
+            if ( this.tokenPromise ) return this.tokenPromise;
+            else {
+                this.tokenPromise = new Promise((resolve, reject) => {
+                    console.log('get token')
+                    wx.login({
+                        success: function (res) {
+                            console.log('res.code', res.code)
+                            if (res.code) {
+                                that._request({ url: '/login', data: { code: res.code } })
+                                    .then(res => {
+                                        if (res.success) {
+                                            that.tokenPromise = '';
+                                            Storer.Token = res.result.token;
+                                            Storer.LastSaveTokenTime = Date.now();
+                                            Storer.setData('Token');
+                                            Storer.setData('LastSaveTokenTime');
+                                            resolve(res.result);
+                                        }
+                                    })
+                                    .catch(err => console.log(err || 'register error'));
+                            }
                         }
-                    }
-                })
-            });
+                    })
+                });
+                return this.tokenPromise;
+            }
         }
     }
 
@@ -56,9 +73,9 @@ class Request {
         });
     }
     
-    request(opt, needReFetch = true) {
-        let { url, data = {}, method = 'POST', dataType = 'json' } = opt;
+    _request(opt, needReFetch) {
         let that = this;
+        let { url, data = {}, method = 'POST', dataType = 'json' } = opt;
         return new Promise((resolve, reject) => {
             wx.request({
                 url: this.baseUrl + url,
@@ -71,18 +88,18 @@ class Request {
                 },
                 dataType: dataType,
                 success: function (res) {
+                    console.log('raw res', res);
                     // 如果状态码是 2xx 说明正确
                     var code = res.statusCode + '';
                     if (code && (code.charAt(0) === '2')) {
-                        if (res.error) reject(res.error);
-                        else resolve(res.data);
+                        resolve(res.data);
                     } else {
                         // token 过期 && 需要重新请求
-                        console.log(needReFetch);
                         if (code === '401' && needReFetch) {
+                            console.log('重新请求')
                             that.getToken(true)
                                 .then(res => {
-                                    that.request(opt, false)
+                                    that._request(opt, false)
                                         .then(res => resolve(res))
                                         .catch(err => reject('request失败', err || ''))
                                 })
@@ -100,6 +117,17 @@ class Request {
                 }
             })
         })
+    }
+    request(opt, needReFetch = true) {
+        // 简单判断下 过期了 
+        if (apiRequestNeedToken(opt.url) && tokenIsExpire() ) { 
+            return this.getToken(true).then( res => {
+                return this._request(opt, false)
+            })
+        } else { // 初步判断没有过期
+            return this._request(opt, true)
+        }
+        
     }
 }
 

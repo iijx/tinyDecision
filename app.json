@@ -5,13 +5,15 @@
         "pages/create/create",
         "pages/detail/detail",
         "pages/about/about",
-        "pages/tpl/tpl"
+        "pages/tpl/tpl",
+        "pages/public/public"
+        ,"pages/music/music"
     ],
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#efeff4",
         "backgroundColor": "#efeff4",
-        "navigationBarTitleText": "小决定助手",
+        "navigationBarTitleText": "Q选择",
         "navigationBarTextStyle": "black"
     },
     "tabBar": {
@@ -25,11 +27,16 @@
                 "text": "首页"
             },
             {
+                "pagePath": "pages/public/public",
+                "iconPath": "/assets/imgs/icon-list.png",
+                "selectedIconPath": "/assets/imgs/icon-list-1.png",
+                "text": "Q选"
+            },
+            {
                 "pagePath": "pages/my/my",
                 "iconPath": "/assets/imgs/icon-my.png",
                 "selectedIconPath": "/assets/imgs/icon-my-1.png",
                 "text": "我"
-                
             }
         ]
     }

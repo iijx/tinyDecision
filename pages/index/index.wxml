@@ -1,8 +1,7 @@
 <view class="container">
-	<view class="add-wrap">
-		<!-- <view class="add-btn" bindtap="pageToCreate">+ 创建</view> -->
-		<button class="add-btn" type="mini" size="mini"  bindtap="pageToCreate" hover-class="defaultTap">+ 创建</button>
-	</view>
+	 <view class="add-wrap">
+		<button class="add-btn" type="mini" size="mini"  bindtap="pageToCreate" type="warn" hover-class="defaultTap">做个决定</button>
+	</view> 
 	<view class="list-wrap">
 		<view class="item1" wx:for="{{list}}" wx:key="item1-{{index}}" wx:for-index="i">
 			<view class="date">{{computed.delYear(item.showTime)}}</view>

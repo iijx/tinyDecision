@@ -4,6 +4,7 @@ import Storer from './storage.js';
 class Api extends Request {
     constructor(baseUrl) {
         super(baseUrl)
+        
     }
 
     getCopyData() {

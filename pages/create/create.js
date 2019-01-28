@@ -32,9 +32,8 @@ Page({
             }, 400);
         } 
         else {
-            this.setData({
-                createType: 'question'
-            })
+            let _data = { createType: 'question', question: opt.title || ''}
+            this.setData(_data)
             wx.setNavigationBarTitle({
                 title: 'question create'
             })

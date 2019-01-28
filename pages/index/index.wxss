@@ -12,7 +12,7 @@
 }
 .add-btn {
 	/* background: #52c41a; */
-	border: 1px solid #52c41a;
+	/* border: 1px solid #52c41a; */
 	/* border-radius: 50%; */
 	/* width: 60rpx; */
 	margin: 0;
