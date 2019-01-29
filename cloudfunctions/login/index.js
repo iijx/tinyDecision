@@ -35,7 +35,19 @@ exports.main = async (event, context) => {
                     }
                 }
             });
-            
+            await cloud.callFunction({
+                name: 'question',
+                data: {
+                    type: 'create',
+                    question: {
+                        userOpenid: userData.openid,
+                        title: '他日，我们还会再见吗？',
+                        options: ['会', '不会'],
+                        maxLotteryTimes: -1,
+                        lotteriedTimes: 0,
+                    }
+                }
+            })
             return userData;
         }
     } catch (error) {

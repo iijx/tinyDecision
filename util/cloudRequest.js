@@ -23,11 +23,11 @@ class CloudRequest {
         })
     }
     getQuestionList() {
-        const Questions = this.getDb().collection('Questions');
+        const Questions = this.getDb().collection('questions');
         return this.getOpenId().then(openid => {
-
+            console.log('openid', openid,typeof openid)
             return Questions.where({
-                _openid: openid,
+                userOpenid: openid,
             }).get()
         })
     }
