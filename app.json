@@ -13,7 +13,7 @@
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#efeff4",
         "backgroundColor": "#efeff4",
-        "navigationBarTitleText": "Q选择",
+        "navigationBarTitleText": "小决定助手",
         "navigationBarTextStyle": "black"
     },
     "tabBar": {
@@ -25,12 +25,6 @@
                 "iconPath": "/assets/imgs/icon-list.png",
                 "selectedIconPath": "/assets/imgs/icon-list-1.png",
                 "text": "首页"
-            },
-            {
-                "pagePath": "pages/public/public",
-                "iconPath": "/assets/imgs/icon-list.png",
-                "selectedIconPath": "/assets/imgs/icon-list-1.png",
-                "text": "Q选"
             },
             {
                 "pagePath": "pages/my/my",

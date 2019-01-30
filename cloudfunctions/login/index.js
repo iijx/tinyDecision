@@ -5,7 +5,8 @@ const cloud = require("wx-server-sdk");
 
 // 初始化 cloud
 cloud.init({
-    env: "iijx-tinydesion-test-db8c7b"
+    // env: "iijx-tinydesion-test-db8c7b",
+    env: "iijx-tinydecision-db8c7b"
 });
 
 /**

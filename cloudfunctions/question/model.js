@@ -10,7 +10,7 @@ class QuestionModel {
             isResolved: question.isResolved || false,
             resolvedValue: question.resolvedValue || '',
             resolvedAngle: question.resolvedAngle || 0,
-            resolvedTime: question.resolvedTime || new Date('1970-1-1')
+            resolvedTime: question.resolvedTime || new Date('1970-1-1').getTime()
         };
         this.meta = {
             created: question.created || Date.now(),

@@ -22,6 +22,15 @@ class CloudRequest {
             data: {}
         })
     }
+    createQuestion(question) {
+        return wx.cloud.callFunction({
+            name: 'question',
+            data: {
+                type: 'create',
+                question,
+            }
+        })
+    }
     getQuestionList() {
         const Questions = this.getDb().collection('questions');
         return this.getOpenId().then(openid => {
@@ -29,6 +38,15 @@ class CloudRequest {
             return Questions.where({
                 userOpenid: openid,
             }).get()
+        })
+    }
+    updateQuestion(question) {
+        return wx.cloud.callFunction({
+            name: 'question',
+            data: {
+                type: 'update',
+                question
+            }
         })
     }
 }

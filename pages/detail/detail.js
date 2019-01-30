@@ -1,4 +1,4 @@
-const { Storer, Api, Util, XData, Config } = getApp();
+const { Storer, Api, Util, XData, Config, CloudRequest } = getApp();
 Page({
     staticData: {
         // color: ['#ef5350', '#ffa626', '#ffca28', '#66ba6a', '#42a5f5', '#5c6bc0', '#ab47bc', '#ec407a', '#dc1846'],
@@ -146,8 +146,8 @@ Page({
         let info = this.data.info;
         info.isResolved = true;
         info.lotteriedTimes += 1;
-        info.resolvedAt = new Date();
-        
+        info.resolvedAt = Date.now();
+        console.log(0)
         // 根据相对性，转盘的转动可以看成是指针旋转了，并算出具体角度
         answerAngle = parseInt(answerAngle % 360);
         let pointRotateAngle = (270 - answerAngle);
@@ -168,11 +168,23 @@ Page({
             type: 'CHANGE_QUESTIONS',
             value: questions
         });
-
-        Api.put('/question', result)
-            .then( res => {
-                console.log('put success', res)
-            })
+        console.log(1)
+        CloudRequest.updateQuestion({
+            id: result.id,
+            lotteriedTimes: result.lotteriedTimes,
+            resolveInfo: {
+                isResolved: result.isLottering,
+                resolvedTime: result.resolvedAt,
+                resolvedAngle: result.resolvedAngle,
+                resolvedValue: result.resolvedValue
+            }
+        }).then(res => {
+            console.log('updateQuestion res => ', res)
+        })
+        // Api.put('/question', result)
+        //     .then( res => {
+        //         console.log('put success', res)
+        //     })
     },
     onShow() {
     },

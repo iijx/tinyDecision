@@ -1,4 +1,4 @@
-const { Api, Storer, Util, XData, DataTransform } = getApp();
+const { Api, Storer, Util, XData, DataTransform,CloudRequest } = getApp();
 
 Page({
     staticData: {
@@ -86,13 +86,11 @@ Page({
     },
     _createQuestion() {
         // 发送数据
-        Api.post('/question', {
-            question: this.data.question,
+        CloudRequest.createQuestion({
+            title: this.data.question,
             options: Util.iFilter(this.data.options, item => item !== ''),
-            maxLotteryTimes: 1,
-            lotteriedTimes: 0,
         }).then(res => {
-            // 本地保存
+            console.log('create res', res)
             let result = DataTransform.question_back2front(res.result)
             XData.dispatch({
                 type: 'ADD_QUESTION',
@@ -103,6 +101,23 @@ Page({
                 url: '../detail/detail?id=' + result.id
             })
         })
+        // Api.post('/question', {
+        //     question: this.data.question,
+        //     options: Util.iFilter(this.data.options, item => item !== ''),
+        //     maxLotteryTimes: 1,
+        //     lotteriedTimes: 0,
+        // }).then(res => {
+        //     // 本地保存
+        //     let result = DataTransform.question_back2front(res.result)
+        //     XData.dispatch({
+        //         type: 'ADD_QUESTION',
+        //         value: result
+        //     });
+        //     this.initDataReset();
+        //     wx.redirectTo({
+        //         url: '../detail/detail?id=' + result.id
+        //     })
+        // })
     },
     _createTpl(_formId) {
         Api.post('/tpl', {
