@@ -9,14 +9,11 @@ const createQuestion = async question => {
     const db = cloud.database();
     const qCollections = db.collection('questions');
     const curQuestion = new QuestionModel(question);
-    try {
-        return await qCollections.add({
-            data: curQuestion
-        })
-    } catch (error) {
-        console.log(error)
-        return error;
-    }
+    consoel.log('will be store database:', curQuestion);
+    return await qCollections.add({
+        data: curQuestion
+    })
+    
 
 } 
 // 云函数入口函数

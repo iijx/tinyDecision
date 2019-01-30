@@ -4,7 +4,7 @@ const question_back2front = item => {
         id: item._id,
         options: item.options,
         question: item.title,
-        isResolved: item.isResolved,
+        isResolved: item.resolveInfo.isResolved,
         resolvedValue: item.resolveInfo.resolvedValue || undefined,
         resolvedAngle: item.resolveInfo.resolvedAngle || 0,
         resolvedAt: item.resolveInfo.resolvedTime || undefined, 
