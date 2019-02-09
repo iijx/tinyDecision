@@ -1,1 +1,10 @@
 /* pages/chooseCreateType.wxss */
+.container {
+    padding-top: 32rpx;
+}
+.title {
+    font-size:14px;
+    line-height:1;
+    color:#1c2438;
+    padding: 40rpx 0 20rpx 10px;
+}

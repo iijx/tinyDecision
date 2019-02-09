@@ -1,10 +1,14 @@
 /* pages/tpl/tpl.wxss */
-
 .tpl-list {
-    padding: 60rpx 18rpx;
+    padding: 30rpx 18rpx 10rpx;
+}
+.noTplNote {
+	color: #4a4a4a;
+	font-size: 14px;
+	text-align: center;
 }
 .add-wrap {
-    margin-top: 80rpx;
+    margin-top: 20rpx;
 }
 .add-btn {
     background: #fff;
@@ -21,7 +25,7 @@
 
 .item {
 	display: flex;
-	margin-bottom: 30rpx;	
+	margin-bottom: 30rpx;
 }
 .item .left-line {
 	border-bottom-left-radius: 5px;

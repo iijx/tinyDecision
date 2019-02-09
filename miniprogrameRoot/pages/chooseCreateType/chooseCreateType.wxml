@@ -1,10 +1,10 @@
 <!--pages/chooseCreateType.wxml-->
-<view>
+<view class="container">
     <i-button type="primary" bind:click="pageToCreate">创建新的决定</i-button>
     <view class="tpl-section">
-        <text>模板</text>
+        <text class="title">模板</text>
         <view class="tpl-list-wrap">
-            <i-button type="ghost" class="tpl" wx:for="{{defaultTplList}}">{{ item.title }}</i-button>
+            <i-button type="ghost" class="tpl" wx:for="{{tplList}}" wx:key="{{item.id}}" bindtap="tplBtnTap" data-id="{{item.id}}">{{ item.title }}</i-button>
         </view>
     </view>
 </view>

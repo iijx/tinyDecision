@@ -1,12 +1,13 @@
 <!--pages/tpl/tpl.wxml-->
 <view class="container">
+    <view class="add-wrap">
+        <i-button type="primary" bindtap="pageToCreate">新建模板</i-button>
+    </view>
     <view class="tpl-list">
+        <view class="noTplNote" wx:if="{{ tplList.length <= 0}}">暂无自定义模板</view>
         <view class="item" wx:for="{{tplList}}" wx:key="{{item.id}}" bindtap="itemTap" data-id="{{item.id}}">
             <view class="left-line" style="background:#52c41a"></view>
-            <view class="question">{{item.question}}</view>
-        </view>
-        <view class="add-wrap">
-            <button type="primary" size="default"  plain="true" bindtap="pageToCreate" hover-class="defaultTap">新建模板</button>
+            <view class="question">{{item.title}}</view>
         </view>
     </view>
 </view>

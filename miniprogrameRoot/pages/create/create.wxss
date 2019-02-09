@@ -70,3 +70,7 @@
 .tpl-list .item:last-child {
     margin-bottom: 0;
 }
+
+.submit-btn {
+    margin-top: 32rpx;
+}

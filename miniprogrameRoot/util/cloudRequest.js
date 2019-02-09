@@ -40,6 +40,10 @@ class CloudRequest {
             }).orderBy('meta.updated', 'desc').get()
         })
     }
+    getQuestionById(id) {
+        const Questions = this.getDb().collection('questions');
+        return Questions.doc(id).get()
+    }
     updateQuestion(question) {
         return wx.cloud.callFunction({
             name: 'question',
@@ -53,6 +57,48 @@ class CloudRequest {
         return wx.cloud.callFunction({
             name: 'versionNote',
             data: {}
+        })
+    }
+    getDefaultTpls() {
+        return wx.cloud.callFunction({
+            name: 'tpl',
+            data: {
+                tplType: 'defaultTpl'
+            }
+        })
+    }
+    getUserTpls() {
+        const Tpls = this.getDb().collection('tpls');
+        return this.getOpenId().then(openid => {
+            return Tpls.where({
+                _openid: openid,
+            }).orderBy('meta.updated', 'desc').get()
+        })
+    }
+    getAllTpls() {
+        return Promise.all([this.getUserTpls(), this.getDefaultTpls()])
+            .then(res => {
+                return {
+                    data: [
+                        ...(res[0].data).map(item => ({...item, id: item._id})),
+                        ...(res[1].result.defaultTpls)
+                    ]
+                }
+            })
+    }
+
+    createTpl(_tpl) {
+        const Tpls = this.getDb().collection('tpls');
+        return Tpls.add({
+            data: {
+                type: 'userCreate',
+                ..._tpl
+            }
+        }).then(res => {
+            return {
+                id: res._id,
+                ..._tpl,
+            };
         })
     }
 }

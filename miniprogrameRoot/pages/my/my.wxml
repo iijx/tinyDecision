@@ -9,29 +9,24 @@
             <view>功能预告与讨论</view>
             <view class="arrow-right"></view>
         </view>
+        <view class="operator">
+            <button class="contact-button" open-type="contact">建议/联系/留言</button>
+            <view class="arrow-right"></view>
+        </view>
     </view>
 
     <view class="operators">
         <!-- <view class="operator" bindtap="wait">模板</view> -->
-        <view class="operator" bindtap="wait">
+        <view class="operator" bindtap="pageToTpl">
             <view>我的模板</view>
+            <view class="arrow-right"></view>
+        </view>
+        <view class="operator" bindtap="pageToAbout">
+            <view>关于</view>
             <view class="arrow-right"></view>
         </view>
         <!--<view class="operator" bindtap="wait">高级设置</view>-->
     </view>
 
-    <view class="operators">
-        <!--
-        <view class="operator">常见问题</view>
-        -->
-        <!--<view class="operator">
-            <button class="contact-button" open-type="contact">建议与联系</button>
-            <view class="arrow-right"></view>
-        </view>-->
-        <view class="operator" bindtap="pageToAbout">
-            <view>关于</view>
-            <view class="arrow-right"></view>
-        </view>
-    </view>
 
 </view>

@@ -7,7 +7,6 @@ const tpls = (state = [], action) => {
         case 'UPDATE_TPLS':
             return [...action.value];
         case 'UPDATE_TPL':
-            
             return [...action.value];
         default:
             return state

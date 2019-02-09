@@ -1,3 +1,5 @@
+import cloudRequest from "../../util/cloudRequest";
+
 const { Api, Storer, Util, XData, DataTransform,CloudRequest } = getApp();
 
 Page({
@@ -5,12 +7,15 @@ Page({
     },
     data: {
         createType: '', // 创建类型
-        question: '',
+        title: '',
         options: ['', ''],
         submitLoading: false,
         canSubmit: false,
-        isShowTplList: false,
-        tplList: [],
+        switch: false,
+    },
+    onLoad(opt = {}) {
+        console.log('create opt =>', opt);
+        this.typeInit(opt );
     },
     typeInit(opt) {
         let _type = opt.type || '';
@@ -22,26 +27,32 @@ Page({
             wx.setNavigationBarTitle({ title: '编辑模板'});
             this.staticData.id = opt.id;
             setTimeout( () => {
-                let { tpls } = XData.getState();
-                let tpl = tpls.find( item => item.id === opt.id );
-                this.setData({
-                    question: tpl.question,
-                    options: tpl.options,
-                });
-                this.updateCanSubmit();
+                this.tplInit(opt)
             }, 400);
         } 
         else {
-            let _data = { createType: 'question', question: opt.title || ''}
+            let _data = { createType: 'question'}
             this.setData(_data)
+            this.tplInit(opt);
             wx.setNavigationBarTitle({
                 title: '创建问题'
             })
         }
     },
-    onLoad(opt = {}) {
-        console.log('opt => ', opt)
-        this.typeInit(opt );
+    tplInit(opt) {
+        let tplId = opt.tplId;
+        if (!tplId) return;
+
+        let { tpls } = XData.getState();
+        let tpl = tpls.find( item => item.id === tplId );
+        this.setData({
+            title: tpl.title,
+            options: tpl.options,
+        });
+        setTimeout(() => {
+            this.updateCanSubmit();
+        }, 60)
+
     },
     addOption() {
         this.data.options.push('');
@@ -49,8 +60,8 @@ Page({
             options: this.data.options
         })
     },
-    questionInput(e) {
-        this.data.question = e.detail.value;
+    titleInput(e) {
+        this.data.title = e.detail.value;
         this.updateCanSubmit();
     },
     optionInput(e) {
@@ -68,7 +79,7 @@ Page({
         return validLength >= 2;
     },
     updateCanSubmit() {
-        if (this.data.question.length > 0 && this.optionsLengthCheck()) {
+        if (this.data.title.length > 0 && this.optionsLengthCheck()) {
             !this.data.canSubmit && this.setData({ canSubmit: true })
         } else {
             this.data.canSubmit && this.setData({ canSubmit: false })
@@ -77,18 +88,18 @@ Page({
     // data reset
     initDataReset() {
         this.setData({
-            question: '',
+            title: '',
             options: ['', ''],
             submitLoading: false,
             canSubmit: false,
-            submitLoading: false,
         })
     },
     _createQuestion() {
         // 发送数据
         CloudRequest.createQuestion({
-            title: this.data.question,
+            title: this.data.title,
             options: Util.iFilter(this.data.options, item => item !== ''),
+            maxLotteryTimes: this.data.switch ? -1 : 1
         }).then(res => {
             console.log('create res', res)
             let result = DataTransform.question_back2front(res.result)
@@ -101,34 +112,16 @@ Page({
                 url: '../detail/detail?id=' + result.id
             })
         })
-        // Api.post('/question', {
-        //     question: this.data.question,
-        //     options: Util.iFilter(this.data.options, item => item !== ''),
-        //     maxLotteryTimes: 1,
-        //     lotteriedTimes: 0,
-        // }).then(res => {
-        //     // 本地保存
-        //     let result = DataTransform.question_back2front(res.result)
-        //     XData.dispatch({
-        //         type: 'ADD_QUESTION',
-        //         value: result
-        //     });
-        //     this.initDataReset();
-        //     wx.redirectTo({
-        //         url: '../detail/detail?id=' + result.id
-        //     })
-        // })
     },
     _createTpl(_formId) {
-        Api.post('/tpl', {
-            question: this.data.question,
+        CloudRequest.createTpl({
+            title: this.data.title,
             options: Util.iFilter(this.data.options, item => item !== ''),
-            maxLotteryTimes: 1,
         }).then(res => {
-            // let result = DataTransform.question_back2front(res.result)
+            console.log(res)
             XData.dispatch({
                 type: 'ADD_TPL',
-                value: res.result,
+                value: res,
             })
             wx.navigateBack({});
         })
@@ -136,7 +129,7 @@ Page({
     _editTpl(_formId) {
         Api.put('/tpl', {
             id: this.staticData.id,
-            question: this.data.question,
+            title: this.data.title,
             options: Util.iFilter(this.data.options, item => item !== ''),
             
         }).then(res => {
@@ -157,12 +150,12 @@ Page({
         let formId = e.detail.value;
         this.setData({ submitLoading: true });
 
-
+        console.log(this.data.createType, typeof this.data.createType)
         // 创建模板
         if (this.data.createType === 'tpl') {
             this._createTpl(formId);
         } 
-        if (this.data.createType === 'tpl_edit') {
+        else if (this.data.createType === 'tpl_edit') {
             this._editTpl(formId);
         } 
         // 创建问题
@@ -174,64 +167,11 @@ Page({
         }
 
     },
-    hiddenTplList() {
-        this.setData({ isShowTplList: false, })
-    },
-    importTplBtn() {
-        if (this.data.tplList.length <= 0) {
-            let { tpls } = XData.getState();
-            if (tpls.length <= 0) {
-                Api.get('/tpl')
-                    .then(res => {
-                        let result = res.result.map(item => DataTransform.question_back2front(item))
-                        this.setData({
-                            tplList: result,
-                            isShowTplList: true,
-                        })
-                    })
-            } else {
-                this.setData({
-                    tplList: tpls,
-                    isShowTplList: true,
-                })
-            }
-        }
-        else {
-            this.setData({ isShowTplList: true })
-        }
-    },
-    tplItemTap(e) {
-        let index = Number(e.currentTarget.dataset.index);
-
-        let item = this.data.tplList[index];
-
-        let { question, options } = item;
-
+    onChange(event){
+        const detail = event.detail;
         this.setData({
-            question,
-            options,
-            isShowTplList: false,
-        });
-        this.updateCanSubmit();
+            'switch' : detail.value
+        })
 
-    },
-    showTplList() {
-        this.setData({ isShowTplList: true })
-        if (this.data.tplList.length <= 0) {
-            wx.showModal({
-                title: '无',
-                content: '模板库是空的啦！',
-                confirmText: '去创建',
-                success: function (res) {
-                    if (res.confirm) {
-                        wx.navigateTo({
-                            url: '../tpl/tpl',
-                        })
-                    }
-                }
-            })
-        } else {
-            this.setData({ isShowTplList: true })
-        }
     }
 })

@@ -1,4 +1,4 @@
-const { Storer, Api, Util, XData, Config, CloudRequest } = getApp();
+const { Storer, Api, Util, XData, Config,DataTransform, CloudRequest } = getApp();
 Page({
     staticData: {
         // color: ['#ef5350', '#ffa626', '#ffca28', '#66ba6a', '#42a5f5', '#5c6bc0', '#ab47bc', '#ec407a', '#dc1846'],
@@ -11,50 +11,63 @@ Page({
         animationData: {},
         img: '',
         pointerImg: '',
+        isShowIndexbtn: false,
+    },
+    _getQuestionById(id) {
+        return new Promise((resolve, reject) => {
+            let { questions } = XData.getState();
+            let index = Util.iFind(questions, item => item.id === id);
+            if (index === -1) {
+                CloudRequest.getQuestionById(id).then(res => {
+                    console.log(res)
+                    resolve(DataTransform.question_back2front(res.data))
+                }).catch(err => {
+                    reject(err)
+                })
+            } else resolve({...questions[index]})
+        })
     },
     getInitData(opt) {
-        let { questions } = XData.getState();
-        let index = Util.iFind(questions, item => item.id === opt.id);
-        let info = {...questions[index]};
-
-        // 没找到
-        if (index === -1) { return; }
-        // 找到了
-        
-        this.setData({
-            info: info,
-        });
-
-        // 如果已经决议了，就动画到决议角度
-        if ( info.isResolved ) {
-            var animation = wx.createAnimation({
-                duration: 10,
-            });
-            let resultAngle = info.resolvedAngle;
-            animation.rotate(resultAngle).step();
-            this.setData({
-                animationData: animation.export()
-            })
+        if(opt.source === 'share') {
+            this.setData({ isShowIndexbtn: true })
         }
+        return this._getQuestionById(opt.id)
+            .then(res => {
+                let info = res;
+                this.setData({ info });
+        
+                // 如果已经决议了，就动画到决议角度
+                if ( info.isResolved ) {
+                    var animation = wx.createAnimation({
+                        duration: 10,
+                    });
+                    let resultAngle = info.resolvedAngle;
+                    animation.rotate(resultAngle).step();
+                    this.setData({
+                        animationData: animation.export()
+                    })
+                }
+            })
     },
-
     onLoad: function (opt) {
-        this.getInitData(opt);
-        wx.showLoading({
-            title: '加载中...'
-        })
-        setTimeout(() => {
-            this.canvasDraw();
-            setTimeout( () => {
-                this.canvasPointerDraw();
+        this.getInitData(opt)
+            .then(res => {
+                wx.showLoading({
+                    title: '加载中...'
+                })
                 setTimeout(() => {
-                    this.canvas2Img();
-                    setTimeout(() => {
-                        wx.hideLoading();
-                    }, 200);
+                    this.canvasDraw();
+                    setTimeout( () => {
+                        this.canvasPointerDraw();
+                        setTimeout(() => {
+                            this.canvas2Img();
+                            setTimeout(() => {
+                                wx.hideLoading();
+                            }, 200);
+                        }, 300)
+                    }, 200)
                 }, 300)
-            }, 200)
-        }, 300)
+            })
     },
     canvas2Img() {
         let that = this;
@@ -102,7 +115,8 @@ Page({
         if (this.data.isLottering) return;
         if (info.maxLotteryTimes !== -1 && info.maxLotteryTimes <= info.lotteriedTimes ) {
             wx.showToast({
-                title: '无抽取机会',
+                icon: 'none',
+                title: '已经抽过了...',
             })
             return;
         }
@@ -112,9 +126,9 @@ Page({
         setTimeout(() => {
             wx.vibrateShort();
             this.data.isLottering = true;
-
+            const durationTime = 9000;
             var animation = wx.createAnimation({
-                duration: 6000,
+                duration: durationTime,
                 timingFunction: 'ease',
             });
             let resultAngle = parseInt((20 + Math.random()) * 360);
@@ -124,19 +138,14 @@ Page({
                 animationData: animation.export()
             })
             let that = this;
-            // 6s 后震动，并显示答案
+            // 动画结束后震动一下，并显示答案
             setTimeout( () => {
                 wx.vibrateLong();
                 this.data.isLottering = false;
-                // let res = parseInt(resultAngle % 360);
-                // // 根据相对性，转盘的转动可以看成是指针旋转了，并算出具体角度
-                // let pointRotateAngle = (270 + (360 - res))%360;
-                // let perAngle = 360 / this.staticData.options.length;
-                // let lotteryRes = this.staticData.options[parseInt(pointRotateAngle / perAngle)];
                 this.setData({
                     info: this.data.info
                 })
-            }, 6000)
+            }, durationTime)
             // 答案处理
 
             this.answerHandler(resultAngle);
@@ -147,7 +156,6 @@ Page({
         info.isResolved = true;
         info.lotteriedTimes += 1;
         info.resolvedAt = Date.now();
-        console.log(0)
         // 根据相对性，转盘的转动可以看成是指针旋转了，并算出具体角度
         answerAngle = parseInt(answerAngle % 360);
         let pointRotateAngle = (270 - answerAngle);
@@ -173,7 +181,7 @@ Page({
             id: result.id,
             lotteriedTimes: result.lotteriedTimes,
             resolveInfo: {
-                isResolved: result.isLottering,
+                isResolved: result.isResolved,
                 resolvedTime: result.resolvedAt,
                 resolvedAngle: result.resolvedAngle,
                 resolvedValue: result.resolvedValue
@@ -181,10 +189,6 @@ Page({
         }).then(res => {
             console.log('updateQuestion res => ', res)
         })
-        // Api.put('/question', result)
-        //     .then( res => {
-        //         console.log('put success', res)
-        //     })
     },
     onShow() {
     },
@@ -206,22 +210,22 @@ Page({
         ctx.draw(true);
 
         // 指针淡蓝色圈
-        ctx.setStrokeStyle('#4dd0e1');
-        ctx.setLineWidth(2);
+        // ctx.setStrokeStyle('#4dd0e1');
+        ctx.setStrokeStyle('#2d8cf0');
+        ctx.setLineWidth(3);
         ctx.setFillStyle('#fff');
         ctx.beginPath();
         ctx.arc(150, 150, 20, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.fill();
         ctx.draw(true);
-
-
     },
     canvasDraw: function () {
         let that = this;
         var ctx = wx.createCanvasContext('canvas-bg');
         // 外层淡蓝色圈
-        ctx.setStrokeStyle('#80deea');
+        // ctx.setStrokeStyle('#80deea');
+        ctx.setStrokeStyle('#2d8cf0');
         ctx.setLineWidth(4);
         ctx.beginPath();
         ctx.arc(150, 150, 140, 0, 2 * Math.PI);
@@ -269,10 +273,11 @@ Page({
             ctx.draw(true);
         }
     },
-    onShareAppMessage: function (res) {
+    onShareAppMessage: function (e) {
         return {
-            path: '/pages/index/index',
-            title: '做个小决定...',
+            path: '/pages/detail/detail?source=share&id=' + this.data.info.id,
+            title: '你来帮我抽一个吧！',
+            imageUrl: this.data.img
         }
     },
 })

@@ -24,7 +24,8 @@ const prodConf = {
 const commonConf = {
     turntable: {
         minBlock: 8, // 此配置不可更改，否则会引起决议角度 resolvedAngle 发生错乱
-        colors: ['#ef5350', '#ffa626', '#ffca28', '#66ba6a', '#42a5f5', '#5c6bc0', '#ab47bc', '#ec407a', '#dc1846'], 
+        colors: ['#ef5350', '#ffa626', '#ffca28', '#66ba6a', '#42a5f5', '#5c6bc0', '#ab47bc', '#ec407a', '#dc1846',
+                 '#ef5350', '#ffa626', '#ffca28', '#66ba6a', '#42a5f5', '#5c6bc0', '#ab47bc', '#ec407a', '#dc1846'], 
     },
   
 }

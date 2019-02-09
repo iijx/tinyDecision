@@ -2,25 +2,25 @@
     <form report-submit="true" bindsubmit="submit">
         <view class="input-wrap question">
             <image class="icon" src="/assets/imgs/icon-question.png" />
-            <input class="input" value="{{question}}" bindinput="questionInput" placeholder="问题"/>
+            <input class="input" value="{{title}}" bindinput="titleInput" placeholder="问题"/>
         </view>
-        <view class="input-wrap" wx:for="{{options}}">
+        <view class="input-wrap" wx:for="{{options}}" wx:key="{{ index + '-' + item }}">
             <image class="icon" src="/assets/imgs/icon-option.png" />
             <input class="input" value="{{item}}" bindinput="optionInput" data-index="{{index}}" name="" placeholder="{{'选项 ' + (index+ 1)}}"/>
         </view>
-        <button type="defautl" bindtap="addOption" class="add-option" hover-class="other-button-hover"> 增加一项 </button>
-        <button type="primary" form-type="submit" disabled="{{!canSubmit}}" 
+        <button type="defautl" bindtap="addOption" class="add-option" hover-class="other-button-hover"> 增加选项 </button>
+        <i-cell-group wx:if="{{ createType === 'question'}}">
+            <i-cell title="是否无限次抽">
+                <i-switch value="{{ switch }}" bind:change="onChange" slot="footer">
+                    <i-icon type="right" slot="open"></i-icon>
+                    <i-icon type="close" slot="close"></i-icon>
+                </i-switch>
+            </i-cell>
+        </i-cell-group>
+        <!-- 提交按钮 -->
+        <button type="primary" class="submit-btn" form-type="submit" disabled="{{!canSubmit}}" 
                 loading="{{submitLoading}}" hover-class="other-button-hover"> {{ computed.createText(createType) }} </button>
-        <view wx:if="{{createType === 'question'}}" class="mini-btn-wrap">
-            <!-- <button class="mini-btn" type="warn" plain="true" bindtap="importTplBtn">从模板中快速导入</button> -->
-        </view>
     </form>
-    <view hidden="{{!isShowTplList}}" class="tpl-list__wrap">
-        <view class="i_mask" bindtap="hiddenTplList"></view>
-        <view class="tpl-list">
-            <view class="item" wx:for="{{tplList}}" wx:key="{{index}}" data-index="{{index}}" bindtap="tplItemTap">{{item.question}}</view>
-        </view>
-    </view>
 </view>
 
 <wxs module="computed">

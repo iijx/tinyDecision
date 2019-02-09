@@ -1,5 +1,5 @@
 // pages/tpl/tpl.js
-const { Storer, Util, Api, XData } = getApp();
+const { Api, Storer, Util, XData, DataTransform,CloudRequest } = getApp();
 let pageUnsubscribe;
 Page({
     data: {
@@ -8,6 +8,7 @@ Page({
     onLoad () {
         pageUnsubscribe = XData.subscribe( () => {
             let { tpls } = XData.getState();
+            console.log('tpls', tpls)
             this.setData({
                 tplList: tpls,
             })
@@ -18,16 +19,16 @@ Page({
         let { tpls } = XData.getState();
         
         if ( tpls.length <= 0) {
-            Api.get('/tpl')
-                .then(res => {
-                    XData.dispatch({
-                        type: 'ADD_TPLS',
-                        value: res.result,
-                    })
+            CloudRequest.getAllTpls().then(res => {
+                console.log(res)
+                XData.dispatch({
+                    type: 'ADD_TPLS',
+                    value: res.data.filter(item => item.type !== 'defaultTpl'),
                 })
+            })
         } else {
             this.setData({
-                tplList: tpls,
+                tplList: tpls.filter(item => item.type !== 'defaultTpl'),
             })
         }
     },

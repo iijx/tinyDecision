@@ -13,21 +13,27 @@ Page({
      * Page initial data
      */
     data: {
-        defaultTplList: [
-            {
-                title: '聚餐吃什么？'
-            },
-            {
-                title: '真心话 与 大冒险'
-            },
-        ]
+        tplList: []
     },
 
     /**
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-
+        CloudRequest.getAllTpls().then(res => {
+            console.log(res)
+            XData.dispatch({
+                type: 'ADD_TPLS',
+                value: res.data
+            })
+        })
+        XData.subscribe(() => {
+            let { tpls } = XData.getState();
+            console.log('tpls', tpls)
+            this.setData({
+                tplList: tpls,
+            })
+        })
     },
 
     /**
@@ -36,7 +42,11 @@ Page({
     onReady: function () {
 
     },
-
+    tplBtnTap: Util.throttle(function(e) {
+        wx.navigateTo({
+            url: '../create/create?type=question&tplId=' + e.target.dataset.id
+        })
+    }, 200),
     /**
      * Lifecycle function--Called when page show
      */
@@ -45,7 +55,7 @@ Page({
     },
     pageToCreate: Util.throttle(function() {
         wx.navigateTo({
-            url: '../../create/create?type=question'
+            url: '../create/create?type=question'
         })
     }, 200),
     /**

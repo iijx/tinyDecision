@@ -12,13 +12,11 @@ Page({
         animationData: {},
         img: '',
         list: [],
-        XData,
     },
 
     onLoad() {
         wx.showLoading({ title: '加载中'})
         CloudRequest.getQuestionList().then(res => {
-            console.log('questions', res)
             let data = res.data.map(DataTransform.question_back2front);
             wx.hideLoading();
             XData.dispatch({

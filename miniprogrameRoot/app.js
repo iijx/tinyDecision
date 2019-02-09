@@ -12,7 +12,6 @@ import createStore from "./util/createStore";
 import rootReducers from "./util/xReducers/index";
 const XData = createStore(rootReducers);
 
-console.log(Config)
 App({
     onLaunch: function() {
         if (!wx.cloud) {

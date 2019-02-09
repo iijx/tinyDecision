@@ -2,7 +2,8 @@
 .title {
   text-align: center;
   margin: 100rpx 0;
-  color: #2a2a2a;
+  color: #4a4a4a;
+  font-size: 32rpx;
 }
 .answer {
   text-align: center;
@@ -12,7 +13,6 @@
   text-align: center;
   color: #999;
   font-size: 14px;
-  
 }
 .canvas-wrap {
   position: relative;
@@ -46,4 +46,14 @@ top: 0;
     position: absolute;
     top: 0;
     left: 0;
+}
+.index-btn {
+  float: left;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.share-btn {
+  float: right;
+  background: #ff9900;
+  color: #fff;
 }

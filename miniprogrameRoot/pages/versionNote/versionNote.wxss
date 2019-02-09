@@ -1,4 +1,7 @@
 /* pages/versionNote/versionNote.wxss */
+.container {
+    padding-top: 32rpx;
+}
 .historyVersionBtn {
     color: #2d8cf0;
 }

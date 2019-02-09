@@ -3,6 +3,7 @@ page {
   
   .container {
     height: 100%;
+    /* background: #fff; */
     display: flex;
     flex-direction: column;
     justify-content: center; }
@@ -38,7 +39,7 @@ page {
       .container .content .text {
         line-height: 56rpx;
         padding-top: 60rpx;
-        border-top: 1rpx solid #e7e8ec; }
+        border-top: 1rpx solid #e7f7e8; }
     .container .footer {
       color: #b6b6bf;
       text-align: center;

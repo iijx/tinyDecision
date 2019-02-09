@@ -10,6 +10,9 @@
         <image class="img" animation="{{animationData}}" src="{{img}}" />
         <image class="pointer-img" bindtap="startLottery" src="{{pointerImg}}" />
     </view>
+    
+    <button class="share-btn" open-type="share" size="mini">让TA帮我抽</button>
+    <button wx:if="{{isShowIndexbtn}}" class="index-btn" open-type="ghost" size="mini">回首页</button>
 </view>
 
 <wxs module="computed">

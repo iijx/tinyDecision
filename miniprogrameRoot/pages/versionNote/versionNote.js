@@ -17,11 +17,20 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
+        wx.showLoading()
         CloudRequest.getVersionsNote().then(res => {
             console.log('versionnotes res', res);
+            wx.hideLoading();
             this.setData({
                 nextVersionNotice: res.result.nextVersionNotice || {}
             })
+        }).catch(err => {
+            wx.hideLoading();
+        })
+    },
+    wait() {
+        wx.showToast({
+            title: '敬请期待'
         })
     },
 
