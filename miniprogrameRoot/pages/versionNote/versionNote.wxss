@@ -1,0 +1,4 @@
+/* pages/versionNote/versionNote.wxss */
+.historyVersionBtn {
+    color: #2d8cf0;
+}

@@ -1,0 +1,23 @@
+<view>
+    <i-card title="下个版本预告" extra="{{ '预计上线时间：' + nextVersionNotice.releaseTime }}">
+        <view slot="content">
+            <view wx:for="{{nextVersionNotice.content}}">{{ item }}</view>
+        </view>
+        <view slot="footer">
+            <view class="historyVersionBtn">查看历史版本详情</view>
+        </view>
+    </i-card>
+
+    <i-panel title="更多讨论">
+        
+    </i-panel>
+</view>
+
+
+<wxs module="computed">
+module.exports.nextVersionReleaseTime = function() {
+    if(showTime === '今天' || showTime === '昨天') return showTime;
+    else return showTime.split('年')[1];
+}
+</wxs>
+
