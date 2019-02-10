@@ -1,0 +1,22 @@
+<view class="container">
+    <i-card title="下个版本预告" extra="{{ '预计上线时间：' + nextVersionNotice.releaseTime }}">
+        <view slot="content">
+            <view wx:for="{{nextVersionNotice.content}}" wx:key="{{index}}">{{ item }}</view>
+        </view>
+        <view slot="footer">
+            <view class="historyVersionBtn" bindtap="wait">查看历史版本详情</view>
+        </view>
+    </i-card>
+    <!--
+    <view style="margin-top: 20px">
+        <i-card title="huan">
+            <view slot="content">
+                haha
+            </view>
+            <view slot="footer">
+                
+            </view>
+        </i-card>
+    </view>
+    -->
+</view>

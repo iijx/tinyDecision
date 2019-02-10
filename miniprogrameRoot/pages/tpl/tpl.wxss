@@ -1,0 +1,47 @@
+/* pages/tpl/tpl.wxss */
+.tpl-list {
+    padding: 30rpx 18rpx 10rpx;
+}
+.noTplNote {
+	color: #4a4a4a;
+	font-size: 14px;
+	text-align: center;
+}
+.add-wrap {
+    margin-top: 20rpx;
+}
+.add-btn {
+    background: #fff;
+    border-radius: 4px;
+    margin: 0;
+    height: 100rpx;
+    line-height: 100rpx;
+    color: #52c41a;
+    font-size: 16px;
+    box-sizing: border-box;
+    /* padding-bottom: 2px; */
+    text-align: center;
+}
+
+.item {
+	display: flex;
+	margin-bottom: 30rpx;
+}
+.item .left-line {
+	border-bottom-left-radius: 5px;
+	border-top-left-radius: 5px;
+	width: 4px;
+	overflow: hidden;
+}
+.item .question{
+	flex: 1;
+	color: #2a2a2a;
+	font-size: 17px;
+	min-width: 88rpx;
+	padding: 32rpx 0;
+	background: #fff;
+	/* border-radius: 5px; */
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px; 
+	text-indent: 1em;
+}
