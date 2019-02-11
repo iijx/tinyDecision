@@ -6,7 +6,7 @@ const {
     DataTransform,
     CloudRequest
 } = getApp();
-
+let pageUnsubscribe;
 Page({
 
     /**
@@ -20,14 +20,20 @@ Page({
      * Lifecycle function--Called when page load
      */
     onLoad: function (options) {
-        CloudRequest.getAllTpls().then(res => {
-            console.log(res)
-            XData.dispatch({
-                type: 'ADD_TPLS',
-                value: res.data
+        let { tpls } = XData.getState();
+        if (tpls.length <= 0) {
+            CloudRequest.getAllTpls().then(res => {
+                XData.dispatch({
+                    type: 'ADD_TPLS',
+                    value: res.data
+                })
             })
-        })
-        XData.subscribe(() => {
+        } else {
+            this.setData({
+                tplList: tpls,
+            })
+        }
+        pageUnsubscribe = XData.subscribe(() => {
             let { tpls } = XData.getState();
             console.log('tpls', tpls)
             this.setData({
@@ -91,5 +97,8 @@ Page({
      */
     onShareAppMessage: function () {
 
-    }
+    },
+    onUnload () {
+        pageUnsubscribe();
+    },
 })

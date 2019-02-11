@@ -273,6 +273,12 @@ Page({
             ctx.draw(true);
         }
     },
+
+    pageToIndex() {
+        wx.switchTab({
+            url: '../index/index'
+          })
+    },
     onShareAppMessage: function (e) {
         return {
             path: '/pages/detail/detail?source=share&id=' + this.data.info.id,

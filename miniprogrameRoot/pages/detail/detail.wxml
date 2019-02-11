@@ -12,7 +12,7 @@
     </view>
     
     <button class="share-btn" open-type="share" size="mini">让TA帮我抽</button>
-    <button wx:if="{{isShowIndexbtn}}" class="index-btn" open-type="ghost" size="mini">回首页</button>
+    <button wx:if="{{isShowIndexbtn}}" class="index-btn" bindtap="pageToIndex" open-type="ghost" size="mini">回首页</button>
 </view>
 
 <wxs module="computed">
