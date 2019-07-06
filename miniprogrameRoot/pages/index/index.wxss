@@ -1,6 +1,17 @@
 
 .container {
-	padding: 60rpx 18rpx;
+	padding: 80rpx 0 60rpx;
+}
+.tabs {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 500;
+	border-bottom: 1rpx solid #efefef;
+}
+.users-list-wrap {
+	padding: 0 18rpx;
 }
 .list-wrap {
 	position: relative;

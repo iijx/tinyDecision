@@ -1,0 +1,33 @@
+<view class="container">
+    <view class="user-info-wrap">
+        <view class="left">
+            <view class="avatar">
+                <open-data class="avatar" type="userAvatarUrl"></open-data>
+            </view>
+            <view class="nickname"><open-data class="nickName" type="userNickName"></open-data></view>
+        </view>
+        <view class="right">
+            <view class="num">{{ coin }}</view>
+            <view class="label">决定币</view>
+        </view>
+    </view>
+
+    
+    <view class="note-wrap">
+        <i-collapse name="{{ collapseName }}">
+            <i-collapse-item class="collapse-item" title="决定币有什么用" name="name1">
+                <view slot="content">
+                    <view>1. 用来创建「决定」，每次创建消耗10个决定币;</view>
+                    <view>2. 用来兑换礼品，可在礼品商城中进行用决定币进行兑换</view>
+                </view>
+            </i-collapse-item>
+            <i-collapse-item class="collapse-item" title="如何获取决定币" name="name2">
+                <view slot="content">
+                    <view>1. 每日签到，可获取决定币奖励;</view>
+                    <view>2. 首页浏览投票，一定几率获取若干个决定币;</view>
+                    <view>3. 转发给好友，好友打开小程序，你和好友均可获得30个决定币;</view>
+                </view>
+            </i-collapse-item>
+        </i-collapse>
+    </view>
+</view>

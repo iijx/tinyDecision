@@ -12,8 +12,14 @@ Page({
         animationData: {},
         img: '',
         list: [],
-    },
+        tabActive: "recommends"
 
+    },
+    handleTabChange({ detail }) {
+        this.setData({
+            tabActive: detail.key
+        })
+    },
     onLoad() {
         wx.showLoading({ title: '加载中'})
         CloudRequest.getQuestionList().then(res => {

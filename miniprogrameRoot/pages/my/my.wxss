@@ -23,22 +23,32 @@
 .operators {
     margin-top: 40rpx;
     background: #fff;
+    padding-left: 28rpx;
     border-top: 1rpx solid rgb(217, 217, 217);
+    border-bottom: 1rpx solid rgb(217, 217, 217);
 }
 .operators .operator {
     position: relative;
-    line-height: 98rpx;
-    padding-left: 28rpx;
+    line-height: 92rpx;
+    height: 92rpx;
+    color: #4a4a4a;
+    font-size: 34rpx;
     background: #fff;
-    
     border-bottom: 1rpx solid rgb(217, 217, 217);
 }
+.operators .operator:last-child {
+    border-bottom: none;
+}
+
 .contact-button {
     text-align: left;
     border-top: none;
     border-radius: none;
     background: transparent;
     padding: 0;
+    font-size: 34rpx;
+    font-weight: normal;
+    color: #4a4a4a;
 }
 .contact-button:before, 
 .contact-button:after {

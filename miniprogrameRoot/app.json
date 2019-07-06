@@ -1,15 +1,15 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/account/account",
     "pages/my/my",
     "pages/create/create",
     "pages/detail/detail",
     "pages/about/about",
     "pages/tpl/tpl",
-    "pages/public/public",
-    "pages/music/music",
-    "pages/chooseCreateType/chooseCreateType",
-    "pages/versionNote/versionNote"
+    "pages/versionNote/versionNote",
+    
+    "pages/chooseCreateType/chooseCreateType"
   ],
   "window": {
     "backgroundTextStyle": "light",

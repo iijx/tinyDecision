@@ -1,5 +1,0 @@
-<view class="slider">
-    <view class="slider-rail"></view>
-    <view class="slider-track" style="left: 0; width: {{ left }}"></view>
-    <view class="slider-handle" style="left: {{left}}"></view>
-</view>

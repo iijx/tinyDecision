@@ -8,7 +8,8 @@
             <image class="icon" src="/assets/imgs/icon-option.png" />
             <input class="input" value="{{item}}" bindinput="optionInput" data-index="{{index}}" name="" placeholder="{{'选项 ' + (index+ 1)}}"/>
         </view>
-        <button type="defautl" bindtap="addOption" class="add-option" hover-class="other-button-hover"> 增加选项 </button>
+        <i-button bind:click="addOption" type="ghost" size="small" long inline >加选项</i-button>
+        <view style="margin-bottom: 44rpx;"></view>
         <i-cell-group wx:if="{{ createType === 'question'}}">
             <i-cell title="是否无限次抽">
                 <i-switch value="{{ switch }}" bind:change="onChange" slot="footer">
@@ -19,7 +20,7 @@
         </i-cell-group>
         <!-- 提交按钮 -->
         <button type="primary" class="submit-btn" form-type="submit" disabled="{{!canSubmit}}" 
-                loading="{{submitLoading}}" hover-class="other-button-hover"> {{ computed.createText(createType) }} </button>
+                loading="{{submitLoading}}" > {{ computed.createText(createType) }} </button>
     </form>
 </view>
 

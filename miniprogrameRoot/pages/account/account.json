@@ -1,0 +1,8 @@
+{
+    "usingComponents": {
+        "i-card": "../../assets/lib/iview/card/index",
+        "i-collapse": "../../assets/lib/iview/collapse/index",
+        "i-collapse-item": "../../assets/lib/iview/collapse-item/index",
+        "i-button": "../../assets/lib/iview/button/index"
+    }
+}

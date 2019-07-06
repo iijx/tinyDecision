@@ -15,6 +15,10 @@ Page({
     pageToVersionNote: Util.throttle(() => {
         wx.navigateTo({ url: '../versionNote/versionNote'})
     }, 500),
+    pageToAccount: Util.throttle(() => {
+        wx.navigateTo({ url: '../account/account'})
+    }, 500),
+    
     onShareAppMessage: function (res) {
         return {
             path: '/pages/index/index',

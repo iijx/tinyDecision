@@ -3,7 +3,7 @@
 }
 .input-wrap {
     background: #fff;
-    height: 100rpx;
+    height: 86rpx;
     border-radius: 5px;
     padding-left: 20rpx;
     margin-bottom: 30rpx;
@@ -14,20 +14,16 @@
     margin-bottom: 60rpx;
 }
 .input-wrap .icon {
-    width: 58rpx;
-    height: 58rpx;
+    width: 44rpx;
+    height: 44rpx;
     display: block;
-    margin-right: 14rpx;
+    margin-right: 8rpx;
 }
 .input-wrap .input {
     height: 100%;
     line-height: 100rpx;
     display: block;
     flex: 1;
-}
-.add-option {
-    margin-bottom: 100rpx;
-    text-align: left;
 }
 
 
