@@ -126,7 +126,7 @@ Page({
         setTimeout(() => {
             wx.vibrateShort();
             this.data.isLottering = true;
-            const durationTime = 9000;
+            const durationTime = 7000;
             var animation = wx.createAnimation({
                 duration: durationTime,
                 timingFunction: 'ease',
@@ -272,6 +272,12 @@ Page({
             ctx.fillText(text, x, 6);
             ctx.draw(true);
         }
+    },
+
+    pageToIndex() {
+        wx.switchTab({
+            url: '../index/index'
+          })
     },
     onShareAppMessage: function (e) {
         return {

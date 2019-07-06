@@ -1,39 +1,46 @@
 {
-    "pages": [
-        "pages/index/index",
-        "pages/my/my",
-        "pages/create/create",
-        "pages/detail/detail",
-        "pages/about/about",
-        "pages/tpl/tpl",
-        "pages/public/public",
-        "pages/music/music",
-        "pages/chooseCreateType/chooseCreateType",
-        "pages/versionNote/versionNote"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#efeff4",
-        "backgroundColor": "#efeff4",
-        "navigationBarTitleText": "小决定助手",
-        "navigationBarTextStyle": "black"
-    },
-    "tabBar": {
-        "color": "#929292",
-        "selectedColor": "#52c41a",
-        "list": [
-            {
-                "pagePath": "pages/index/index",
-                "iconPath": "/assets/imgs/icon-list.png",
-                "selectedIconPath": "/assets/imgs/icon-list-1.png",
-                "text": "首页"
-            },
-            {
-                "pagePath": "pages/my/my",
-                "iconPath": "/assets/imgs/icon-my.png",
-                "selectedIconPath": "/assets/imgs/icon-my-1.png",
-                "text": "我"
-            }
-        ]
-    }
+  "pages": [
+    "pages/index/index",
+    "pages/my/my",
+    "pages/create/create",
+    "pages/detail/detail",
+    "pages/about/about",
+    "pages/tpl/tpl",
+    "pages/public/public",
+    "pages/music/music",
+    "pages/chooseCreateType/chooseCreateType",
+    "pages/versionNote/versionNote"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#efeff4",
+    "backgroundColor": "#efeff4",
+    "navigationBarTitleText": "小决定助手",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#929292",
+    "selectedColor": "#52c41a",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "/assets/imgs/icon-list.png",
+        "selectedIconPath": "/assets/imgs/icon-list-1.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/create/create",
+        "iconPath": "/assets/imgs/icon-add-0.png",
+        "selectedIconPath": "/assets/imgs/icon-add-1.png",
+        "text": "来"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "/assets/imgs/icon-my.png",
+        "selectedIconPath": "/assets/imgs/icon-my-1.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
 }

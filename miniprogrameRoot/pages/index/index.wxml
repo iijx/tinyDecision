@@ -2,14 +2,18 @@
 	 <view class="add-wrap">
 		<button class="add-btn" type="mini" size="mini"  bindtap="pageToCreate" type="warn" hover-class="defaultTap">+</button>
 	</view> 
+
 	<view class="list-wrap">
+		<!-- 日期列表 -->
 		<view class="item1" wx:for="{{list}}" wx:key="item1-{{index}}" wx:for-index="i">
 			<view class="date">{{computed.delYear(item.showTime)}}</view>
-			<view class="item2" wx:for="{{item.list}}" wx:key="{{item.id}}" wx:for-index="j" 
-                bindtap="itemClick" data-i="{{i}}" data-j="{{j}}">
-				<view class="left-line" 
-                    style="background: {{ computed.isResolved(item.maxLotteryTimes, item.lotteriedTimes) ? '#52c41a': '#ffec3d'}}"></view>
-				<view class="question">{{item.question}}</view>
+			<!-- 单日列表 -->
+			<view class="qs-item-wrap" wx:for="{{item.list}}" wx:key="{{item.id}}" wx:for-index="j" bindtap="itemClick" data-i="{{i}}" data-j="{{j}}">
+				<view class="qs">
+					<view class="left-line" style="background: {{ computed.isResolved(item.maxLotteryTimes, item.lotteriedTimes) ? '#52c41a': '#ffec3d'}}"></view>
+					<view class="question">{{item.question}}</view>
+				</view>
+				<view wx:if="{{ item.resolvedValue }}" class="answer" wx:id="computed.isResolved(item.maxLotteryTimes, item.lotteriedTimes)">{{ item.resolvedValue }}</view>
 			</view>
 		</view>
 		<!-- 今天暂无 -->

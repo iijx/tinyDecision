@@ -31,18 +31,21 @@
 	line-height: 2.6;
 	text-indent: 1.36em;
 }
-.item2 {
-	display: flex;
+.qs-item-wrap {
+	/* display: flex; */
 	margin-bottom: 30rpx;
+}
+.qs {
+	display: flex;
 	
 }
-.item2 .left-line {
+.qs .left-line {
 	border-bottom-left-radius: 5px;
 	border-top-left-radius: 5px;
 	width: 4px;
 	overflow: hidden;
 }
-.item2 .question{
+.qs .question{
 	flex: 1;
 	color: #2a2a2a;
 	font-size: 17px;
@@ -53,4 +56,9 @@
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px; 
 	text-indent: 1em;
+}
+.qs-item-wrap .answer {
+	text-align: right;
+	color: #52c41a;
+	font-size: 14px;
 }

@@ -2,8 +2,8 @@
 const cloud = require('wx-server-sdk')
 
 cloud.init({
-    env: "iijx-tinydesion-test-db8c7b",
-    // env: "iijx-tinydecision-db8c7b"
+    // env: "iijx-tinydesion-test-db8c7b",
+    env: "iijx-tinydecision-db8c7b"
 })
 
 // 云函数入口函数
