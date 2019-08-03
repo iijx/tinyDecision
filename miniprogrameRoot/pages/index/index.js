@@ -9,17 +9,16 @@ const {
 
 Page({
     data: {
-        animationData: {},
-        img: '',
-        list: [],
-        tabActive: "recommends"
-
+        info: {
+            question: '',
+            resolvedValue: '',
+            options: [],
+            isLottering: false,
+            maxLotteryTimes: -1,
+            lotteriedTimes: 0,
+        }
     },
-    handleTabChange({ detail }) {
-        this.setData({
-            tabActive: detail.key
-        })
-    },
+  
     onLoad() {
         wx.showLoading({ title: '加载中'})
         CloudRequest.getQuestionList().then(res => {
@@ -34,9 +33,43 @@ Page({
         XData.subscribe(() => {
             let { questions } = XData.getState();
             this.setData({
-                list: this.listDataFormat(questions)
+                info: questions[0]
             })
-            console.log(' questions ', questions)
+            // console.log(' questions ', this.listDataFormat(questions))
+        })
+    },
+    answer(answer) {
+        console.log('index',answer);
+        console.log('index',answer, answer.detail.angle, answer.detail.value);
+        let { questions } = XData.getState();
+        let index = Util.iFind(questions, item => item.id === this.data.info.id);
+        
+        let result = {...this.data.info, options: questions[index].options};
+        result.isResolved = true;
+        result.lotteriedTimes += 1;
+        result.resolvedAt = Date.now();
+        result.resolvedAngle = answer.detail.angle;
+        result.resolvedValue = answer.detail.value;
+        this.setData({
+            info: result
+        })
+        console.log(result);
+        questions[index] = result;
+        XData.dispatch({
+            type: 'CHANGE_QUESTIONS',
+            value: questions
+        });
+        CloudRequest.updateQuestion({
+            id: result.id,
+            lotteriedTimes: result.lotteriedTimes,
+            resolveInfo: {
+                isResolved: result.isResolved,
+                resolvedTime: result.resolvedAt,
+                resolvedAngle: result.resolvedAngle,
+                resolvedValue: result.resolvedValue
+            }
+        }).then(res => {
+            console.log('updateQuestion res => ', res)
         })
     },
     handleQuestions(questions) {

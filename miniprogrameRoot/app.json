@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/mylist/mylist",
     "pages/account/account",
     "pages/my/my",
     "pages/create/create",
@@ -24,15 +25,15 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "/assets/imgs/icon-list.png",
-        "selectedIconPath": "/assets/imgs/icon-list-1.png",
-        "text": "首页"
+        "iconPath": "/assets/imgs/icon-now-0.png",
+        "selectedIconPath": "/assets/imgs/icon-now-1.png",
+        "text": "此刻"
       },
       {
-        "pagePath": "pages/create/create",
-        "iconPath": "/assets/imgs/icon-add-0.png",
-        "selectedIconPath": "/assets/imgs/icon-add-1.png",
-        "text": "来"
+        "pagePath": "pages/mylist/mylist",
+        "iconPath": "/assets/imgs/icon-list.png",
+        "selectedIconPath": "/assets/imgs/icon-list-1.png",
+        "text": "序章"
       },
       {
         "pagePath": "pages/my/my",

@@ -1,31 +1,12 @@
 <view class="container">
-	 <!-- <view class="add-wrap">
-		<button class="add-btn" type="mini" size="mini"  bindtap="pageToCreate" type="warn" hover-class="defaultTap">+</button>
-	</view>  -->
-	<i-tabs class="tabs" current="{{ tabActive }}" bindchange="handleTabChange">
-		<i-tab key="recommends" title="推荐"></i-tab>
-		<i-tab key="users" title="我的"></i-tab>
-	</i-tabs>
+	<view class="title">{{info.question}}</view>
+	<view class="answer">{{info.resolvedValue || '???'}}</view>
+	<!-- <view style="opacity: {{info.isResolved ? 1 : 0}}" class="resolvedTime">( {{computed.showResolvedTime(info.resolvedAt)}} )</view> -->
+	<turnable info="{{ info }}" bindanswer="answer" />
 
-	<view class="users-list-wrap" wx:if="{{ tabActive === 'users'}}">
-		<view class="list-wrap">
-			<!-- 日期列表 -->
-			<view class="item1" wx:for="{{list}}" wx:key="item1-{{index}}" wx:for-index="i">
-				<view class="date">{{computed.delYear(item.showTime)}}</view>
-				<!-- 单日列表 -->
-				<view class="qs-item-wrap" wx:for="{{item.list}}" wx:key="{{item.id}}" wx:for-index="j" bindtap="itemClick" data-i="{{i}}" data-j="{{j}}">
-					<view class="qs">
-						<view class="left-line" style="background: {{ computed.isResolved(item.maxLotteryTimes, item.lotteriedTimes) ? '#52c41a': '#ffec3d'}}"></view>
-						<view class="question">{{item.question}}</view>
-					</view>
-					<!-- <view wx:if="{{ item.resolvedValue }}" class="answer" wx:id="computed.isResolved(item.maxLotteryTimes, item.lotteriedTimes)">{{ item.resolvedValue }}</view> -->
-				</view>
-			</view>
-			<!-- 今天暂无 -->
-		</view>
+	<view class="text-right">
+		<button class="share-btn" open-type="share" size="mini">让TA选</button>
 	</view>
-
-    
 </view>
 
 <wxs module="computed">
