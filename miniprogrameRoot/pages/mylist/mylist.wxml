@@ -1,0 +1,34 @@
+<view class="container">
+	<view class="users-list-wrap">
+		<view class="list-wrap">
+			<!-- 日期列表 -->
+			<view class="item1" wx:for="{{list}}" wx:key="item1-{{index}}" wx:for-index="i">
+				<view class="date">{{computed.delYear(item.showTime)}}</view>
+				<!-- 单日列表 -->
+				<view class="qs-item-wrap" wx:for="{{item.list}}" wx:key="{{item.id}}" wx:for-index="j" bindtap="itemClick" data-i="{{i}}" data-j="{{j}}">
+					<view class="qs">
+						<view class="left-line" style="background: {{ computed.isResolved(item.maxLotteryTimes, item.lotteriedTimes) ? '#52c41a': '#ffec3d'}}"></view>
+						<view class="question">{{item.question}}</view>
+					</view>
+					<!-- <view wx:if="{{ item.resolvedValue }}" class="answer" wx:id="computed.isResolved(item.maxLotteryTimes, item.lotteriedTimes)">{{ item.resolvedValue }}</view> -->
+				</view>
+			</view>
+			<!-- 今天暂无 -->
+		</view>
+    </view>
+    
+    <!-- 添加按钮 -->
+    <view class="add-btn-wrap" bindtap="tocreate">+</view>
+
+    
+</view>
+
+<wxs module="computed">
+module.exports.delYear = function(showTime) {
+    if(showTime === '今天' || showTime === '昨天') return showTime;
+    else return showTime.split('年')[1];
+}
+module.exports.isResolved = function(maxLotteryTimes, lotteriedTimes) {
+    return maxLotteryTimes !== -1 && maxLotteryTimes <= lotteriedTimes;
+}
+</wxs>
