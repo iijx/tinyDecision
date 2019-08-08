@@ -1,15 +1,16 @@
 <view class="container">
     <view class="title">{{info.question}}</view>
     <view class="answer">{{info.resolvedValue || '???'}}</view>
-    <view style="opacity: {{info.isResolved ? 1 : 0}}" class="resolvedTime">( {{computed.showResolvedTime(info.resolvedAt)}} )</view>
-    <view class="canvas-wrap">
+    <!-- <view style="opacity: {{info.isResolved ? 1 : 0}}" class="resolvedTime">( {{computed.showResolvedTime(info.resolvedAt)}} )</view> -->
+    <turnable info="{{ info }}" bindanswer="answer" />
+    <!-- <view class="canvas-wrap">
         <canvas  class="canvas" canvas-id="canvas-bg" style="width: 300px; height: 300px;"></canvas>
         <canvas  class="canvas" canvas-id="canvas-pointer" style="width: 300px; height: 300px;"></canvas>
     </view>
     <view class="turnable-wrap">
         <image class="img" animation="{{animationData}}" src="{{img}}" />
         <image class="pointer-img" bindtap="startLottery" src="{{pointerImg}}" />
-    </view>
+    </view> -->
     
     <button class="share-btn" open-type="share" size="mini">让TA选</button>
     <button wx:if="{{isShowIndexbtn}}" class="index-btn" bindtap="pageToIndex" open-type="ghost" size="mini">回首页</button>

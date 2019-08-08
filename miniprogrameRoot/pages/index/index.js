@@ -21,17 +21,24 @@ Page({
   
     onLoad() {
         wx.showLoading({ title: '加载中'})
-        CloudRequest.getQuestionList().then(res => {
-            let data = res.data.map(DataTransform.question_back2front);
+        Api.getQuestionList().then(res => {
             wx.hideLoading();
             XData.dispatch({
                 type: 'ADD_QUESTIONS',
-                value: data
+                value: res.list.map(DataTransform.question_back2front)
             })
-        })
-
+        });
+        // CloudRequest.getQuestionList().then(res => {
+        //     let data = res.data.map(DataTransform.question_back2front);
+        //     wx.hideLoading();
+        //     XData.dispatch({
+        //         type: 'ADD_QUESTIONS',
+        //         value: data
+        //     })
+        // })
         XData.subscribe(() => {
             let { questions } = XData.getState();
+            console.log(questions)
             this.setData({
                 info: questions[0]
             })
@@ -59,7 +66,7 @@ Page({
             type: 'CHANGE_QUESTIONS',
             value: questions
         });
-        CloudRequest.updateQuestion({
+        Api.updateQuestion({
             id: result.id,
             lotteriedTimes: result.lotteriedTimes,
             resolveInfo: {
@@ -69,8 +76,20 @@ Page({
                 resolvedValue: result.resolvedValue
             }
         }).then(res => {
-            console.log('updateQuestion res => ', res)
+            console.log('updateQuestion res => ', res);
         })
+        // CloudRequest.updateQuestion({
+        //     id: result.id,
+        //     lotteriedTimes: result.lotteriedTimes,
+        //     resolveInfo: {
+        //         isResolved: result.isResolved,
+        //         resolvedTime: result.resolvedAt,
+        //         resolvedAngle: result.resolvedAngle,
+        //         resolvedValue: result.resolvedValue
+        //     }
+        // }).then(res => {
+        //     console.log('updateQuestion res => ', res)
+        // })
     },
     handleQuestions(questions) {
         return this.listDataFormat(questions)

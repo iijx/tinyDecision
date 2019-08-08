@@ -12,6 +12,20 @@ class Api extends Request {
             url: 'copyData',
         })
     }
+
+    createQuestion(opt) {
+        return this.post('/question', {
+            ...opt
+        })
+    }
+    getQuestionById(id) {
+        return this.get(`/question/${id}`)
+    }
+    updateQuestion(opt) {
+        return this.put('/question', {
+            ...opt
+        })
+    }
    
     getQuestionList() {
         return this.get('/question')

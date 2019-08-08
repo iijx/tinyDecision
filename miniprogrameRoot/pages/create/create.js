@@ -95,8 +95,7 @@ Page({
         })
     },
     _createQuestion() {
-        // 发送数据
-        CloudRequest.createQuestion({
+        Api.createQuestion({
             title: this.data.title,
             options: Util.iFilter(this.data.options, item => item !== ''),
             maxLotteryTimes: this.data.switch ? -1 : 1
@@ -112,19 +111,46 @@ Page({
                 url: '../detail/detail?id=' + result.id
             })
         })
+        // 发送数据
+        // CloudRequest.createQuestion({
+        //     title: this.data.title,
+        //     options: Util.iFilter(this.data.options, item => item !== ''),
+        //     maxLotteryTimes: this.data.switch ? -1 : 1
+        // }).then(res => {
+        //     console.log('create res', res)
+        //     let result = DataTransform.question_back2front(res.result)
+        //     XData.dispatch({
+        //         type: 'ADD_QUESTION',
+        //         value: result
+        //     });
+        //     this.initDataReset();
+        //     wx.redirectTo({
+        //         url: '../detail/detail?id=' + result.id
+        //     })
+        // })
     },
     _createTpl(_formId) {
-        CloudRequest.createTpl({
-            title: this.data.title,
-            options: Util.iFilter(this.data.options, item => item !== ''),
-        }).then(res => {
-            console.log(res)
-            XData.dispatch({
-                type: 'ADD_TPL',
-                value: res,
-            })
-            wx.navigateBack({});
-        })
+        // Api.createQuestion({
+        //     title: this.data.title,
+        //     options: Util.iFilter(this.data.options, item => item !== ''),
+        // }).then(res => {
+        //     XData.dispatch({
+        //         type: 'ADD_TPL',
+        //         value: res,
+        //     })
+        //     wx.navigateBack({});
+        // })
+        // CloudRequest.createTpl({
+        //     title: this.data.title,
+        //     options: Util.iFilter(this.data.options, item => item !== ''),
+        // }).then(res => {
+        //     console.log(res)
+        //     XData.dispatch({
+        //         type: 'ADD_TPL',
+        //         value: res,
+        //     })
+        //     wx.navigateBack({});
+        // })
     },
     _editTpl(_formId) {
         Api.put('/tpl', {

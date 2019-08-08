@@ -16,6 +16,7 @@ Page({
   
     onLoad() {
         wx.showLoading({ title: '加载中'})
+        // Api.get
         CloudRequest.getQuestionList().then(res => {
             let data = res.data.map(DataTransform.question_back2front);
             wx.hideLoading();

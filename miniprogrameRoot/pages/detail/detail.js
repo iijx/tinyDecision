@@ -17,13 +17,17 @@ Page({
         return new Promise((resolve, reject) => {
             let { questions } = XData.getState();
             let index = Util.iFind(questions, item => item.id === id);
-            if (index === -1) {
-                CloudRequest.getQuestionById(id).then(res => {
-                    console.log(res)
-                    resolve(DataTransform.question_back2front(res.data))
-                }).catch(err => {
-                    reject(err)
+            if (index !== -1) {
+                Api.getQuestionById(id).then(res => {
+                    console.log('getQuestionById res => ', res);
+                    resolve(DataTransform.question_back2front(res.data));
                 })
+                // CloudRequest.getQuestionById(id).then(res => {
+                //     console.log(res)
+                //     resolve(DataTransform.question_back2front(res.data))
+                // }).catch(err => {
+                //     reject(err)
+                // })
             } else resolve({...questions[index]})
         })
     },
@@ -52,22 +56,68 @@ Page({
     onLoad: function (opt) {
         this.getInitData(opt)
             .then(res => {
-                wx.showLoading({
-                    title: '加载中...'
-                })
-                setTimeout(() => {
-                    this.canvasDraw();
-                    setTimeout( () => {
-                        this.canvasPointerDraw();
-                        setTimeout(() => {
-                            this.canvas2Img();
-                            setTimeout(() => {
-                                wx.hideLoading();
-                            }, 200);
-                        }, 300)
-                    }, 200)
-                }, 300)
+                // wx.showLoading({
+                //     title: '加载中...'
+                // })
+                // setTimeout(() => {
+                //     this.canvasDraw();
+                //     setTimeout( () => {
+                //         this.canvasPointerDraw();
+                //         setTimeout(() => {
+                //             this.canvas2Img();
+                //             setTimeout(() => {
+                //                 wx.hideLoading();
+                //             }, 200);
+                //         }, 300)
+                //     }, 200)
+                // }, 300)
             })
+    },
+    answer(answer) {
+        console.log('index',answer);
+        console.log('index',answer, answer.detail.angle, answer.detail.value);
+        let { questions } = XData.getState();
+        let index = Util.iFind(questions, item => item.id === this.data.info.id);
+        
+        let result = {...this.data.info, options: questions[index].options};
+        result.isResolved = true;
+        result.lotteriedTimes += 1;
+        result.resolvedAt = Date.now();
+        result.resolvedAngle = answer.detail.angle;
+        result.resolvedValue = answer.detail.value;
+        this.setData({
+            info: result
+        })
+        console.log(result);
+        questions[index] = result;
+        XData.dispatch({
+            type: 'CHANGE_QUESTIONS',
+            value: questions
+        });
+        Api.updateQuestion({
+            id: result.id,
+            lotteriedTimes: result.lotteriedTimes,
+            resolveInfo: {
+                isResolved: result.isResolved,
+                resolvedTime: result.resolvedAt,
+                resolvedAngle: result.resolvedAngle,
+                resolvedValue: result.resolvedValue
+            }
+        }).then(res => {
+            console.log('updateQuestion res => ', res);
+        })
+        // CloudRequest.updateQuestion({
+        //     id: result.id,
+        //     lotteriedTimes: result.lotteriedTimes,
+        //     resolveInfo: {
+        //         isResolved: result.isResolved,
+        //         resolvedTime: result.resolvedAt,
+        //         resolvedAngle: result.resolvedAngle,
+        //         resolvedValue: result.resolvedValue
+        //     }
+        // }).then(res => {
+        //     console.log('updateQuestion res => ', res)
+        // })
     },
     canvas2Img() {
         let that = this;
