@@ -2,7 +2,7 @@
 	<view class="title">{{info.question}}</view>
 	<view class="answer">{{info.resolvedValue || '???'}}</view>
 	<!-- <view style="opacity: {{info.isResolved ? 1 : 0}}" class="resolvedTime">( {{computed.showResolvedTime(info.resolvedAt)}} )</view> -->
-	<turnable info="{{ info }}" bindanswer="answer" />
+	<turnable wx:if="{{ !!info.id }}" info="{{ info }}" bindanswer="answer" />
 
 	<view class="text-right">
 		<button class="share-btn" open-type="share" size="mini">让TA选</button>

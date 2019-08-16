@@ -25,7 +25,7 @@ Page({
             wx.hideLoading();
             XData.dispatch({
                 type: 'ADD_QUESTIONS',
-                value: res.list.map(DataTransform.question_back2front)
+                value: res.list.map(DataTransform.question_back2front).sort((a, b) => a.sortedTime > b.sortedTime ? -1 : 1)
             })
         });
         // CloudRequest.getQuestionList().then(res => {
@@ -46,8 +46,6 @@ Page({
         })
     },
     answer(answer) {
-        console.log('index',answer);
-        console.log('index',answer, answer.detail.angle, answer.detail.value);
         let { questions } = XData.getState();
         let index = Util.iFind(questions, item => item.id === this.data.info.id);
         

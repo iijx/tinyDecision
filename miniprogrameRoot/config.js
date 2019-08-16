@@ -1,8 +1,8 @@
 
 
-const env = 'DEV'; // PROD || DEV
+// const env = 'DEV'; // PROD || DEV
 // const env = 'UAT'; // PROD || DEV
-// const env = 'PROD'; // PROD || DEV
+const env = 'PROD'; // PROD || DEV
 const uatConf = {
     // baseUrl: 'http://192.168.1.3:3008/tinydec/api'
     baseUrl: 'http://192.168.1.3:3009'
@@ -16,7 +16,7 @@ const devConf = {
 }
 // 生产环境相关配置
 const prodConf = {
-    baseUrl: 'https://www.iijx.site/tinydec/api',
+    baseUrl: 'https://api.iijx.site',
     env: 'iijx-tinydecision-db8c7b'
 }
 

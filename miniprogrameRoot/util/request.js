@@ -31,7 +31,7 @@ class Request {
                         success: function (res) {
                             console.log('res.code', res.code)
                             if (res.code) {
-                                that._request({ url: '/user/login', data: { code: res.code } })
+                                that._request({ url: '/auth/login', data: { code: res.code } })
                                     .then(res => {
                                         if (res.success) {
                                             that.tokenPromise = '';

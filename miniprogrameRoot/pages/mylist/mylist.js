@@ -15,15 +15,19 @@ Page({
     },
   
     onLoad() {
-        wx.showLoading({ title: '加载中'})
+        // wx.showLoading({ title: '加载中'})
         // Api.get
-        CloudRequest.getQuestionList().then(res => {
-            let data = res.data.map(DataTransform.question_back2front);
-            wx.hideLoading();
-            XData.dispatch({
-                type: 'ADD_QUESTIONS',
-                value: data
-            })
+        // CloudRequest.getQuestionList().then(res => {
+        //     let data = res.data.map(DataTransform.question_back2front);
+        //     wx.hideLoading();
+        //     XData.dispatch({
+        //         type: 'ADD_QUESTIONS',
+        //         value: data
+        //     })
+        // })
+        let { questions } = XData.getState();
+        this.setData({
+            list: this.listDataFormat(questions)
         })
 
         XData.subscribe(() => {
@@ -31,7 +35,6 @@ Page({
             this.setData({
                 list: this.listDataFormat(questions)
             })
-            console.log(' questions ', questions)
         })
     },
     handleQuestions(questions) {

@@ -56,4 +56,6 @@ top: 0;
   float: right;
   background: #ff9900;
   color: #fff;
+  border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
 }

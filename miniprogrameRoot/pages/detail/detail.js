@@ -20,7 +20,7 @@ Page({
             if (index !== -1) {
                 Api.getQuestionById(id).then(res => {
                     console.log('getQuestionById res => ', res);
-                    resolve(DataTransform.question_back2front(res.data));
+                    resolve(DataTransform.question_back2front(res));
                 })
                 // CloudRequest.getQuestionById(id).then(res => {
                 //     console.log(res)

@@ -102,6 +102,7 @@ Page({
         }).then(res => {
             console.log('create res', res)
             let result = DataTransform.question_back2front(res.result)
+            console.log('result', result);
             XData.dispatch({
                 type: 'ADD_QUESTION',
                 value: result
