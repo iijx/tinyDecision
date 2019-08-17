@@ -10,6 +10,7 @@ const {
 Page({
     data: {
         info: {
+            id: '',
             question: '',
             resolvedValue: '',
             options: [],
@@ -140,9 +141,13 @@ Page({
     },
     // 用户点击右上角分享
     onShareAppMessage: function(res) {
+        // return {
+        //     path: '/pages/index/index',
+        //     title: '做个小决定...',
+        // }
         return {
-            path: '/pages/index/index',
-            title: '做个小决定...',
+            path: '/pages/detail/detail?source=share&id=' + this.data.info.id,
+            title: '你来帮我抽一个吧！',
         }
     },
 })

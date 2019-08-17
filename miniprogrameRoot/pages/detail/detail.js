@@ -17,10 +17,11 @@ Page({
         return new Promise((resolve, reject) => {
             let { questions } = XData.getState();
             let index = Util.iFind(questions, item => item.id === id);
-            if (index !== -1) {
+            console.log(index);
+            if (index === -1) {
                 Api.getQuestionById(id).then(res => {
-                    console.log('getQuestionById res => ', res);
-                    resolve(DataTransform.question_back2front(res));
+                    console.log('getQuestionById res => ', res.result);
+                    resolve(DataTransform.question_back2front(res.result));
                 })
                 // CloudRequest.getQuestionById(id).then(res => {
                 //     console.log(res)
@@ -32,6 +33,7 @@ Page({
         })
     },
     getInitData(opt) {
+        console.log('opt', opt);
         if(opt.source === 'share') {
             this.setData({ isShowIndexbtn: true })
         }
@@ -39,7 +41,7 @@ Page({
             .then(res => {
                 let info = res;
                 this.setData({ info });
-        
+                console.log(res);
                 // 如果已经决议了，就动画到决议角度
                 if ( info.isResolved ) {
                     var animation = wx.createAnimation({

@@ -46,7 +46,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 8,
 			"list": [
 				{
 					"id": -1,
@@ -92,6 +92,20 @@
 					"name": "detail",
 					"pathName": "pages/detail/detail",
 					"query": "id=XF6q5HffS3SWRId_",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/detail/detail",
+					"pathName": "pages/detail/detail?source=share&id= 5d56da58e970132910787cd5",
+					"query": "source=share&id= 5d56da58e970132910787cd5",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "pages/detail/detail",
+					"pathName": "pages/detail/detail",
+					"query": "source=share&id=5d56e0c28eb84b03d16098e5",
 					"scene": null
 				}
 			]
