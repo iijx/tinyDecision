@@ -162,6 +162,11 @@ Page({
             animationData: animation.export()
         })
     },
+    tocreate() {
+        wx.navigateTo({
+            url: '../create/create'
+        });
+    },
     startLottery() {
         let info = this.data.info;
         if (this.data.isLottering) return;

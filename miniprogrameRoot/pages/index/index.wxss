@@ -17,13 +17,22 @@
   }
 
 .share-btn {
-	/* float: right; */
-	background: #ff9900;
+  background: #ff9900;
 	color: #fff;
-	/* border-radius: 0; */
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+  border-left: 0;
+  margin-bottom: 10px;
+}
+.create-btn {
+	background: #52c41a;
+	color: #fff;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
+    margin-bottom: 10px;
 }
+
+
 .mylist-btn {
 	/* float: right; */
 	background: #ff9900;
@@ -33,5 +42,7 @@
 	border-bottom-right-radius: 0;
 }
 .text-right {
-	text-align: right;
+  float: right;
+    text-align: right;
+  
 }

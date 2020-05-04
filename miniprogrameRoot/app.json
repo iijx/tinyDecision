@@ -19,6 +19,9 @@
     "navigationBarTitleText": "小决定助手",
     "navigationBarTextStyle": "black"
   },
+  "navigateToMiniProgramAppIdList": [
+    "wx11a23be8fd1b03f3"
+],
   "tabBar": {
     "color": "#929292",
     "selectedColor": "#52c41a",

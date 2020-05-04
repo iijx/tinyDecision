@@ -29,14 +29,7 @@ Page({
                 value: res.list.map(DataTransform.question_back2front).sort((a, b) => a.sortedTime > b.sortedTime ? -1 : 1)
             })
         });
-        // CloudRequest.getQuestionList().then(res => {
-        //     let data = res.data.map(DataTransform.question_back2front);
-        //     wx.hideLoading();
-        //     XData.dispatch({
-        //         type: 'ADD_QUESTIONS',
-        //         value: data
-        //     })
-        // })
+       
         XData.subscribe(() => {
             let { questions } = XData.getState();
             console.log(questions)
@@ -44,6 +37,18 @@ Page({
                 info: questions[0]
             })
             // console.log(' questions ', this.listDataFormat(questions))
+        })
+
+        
+
+        
+    },
+    toShuting() {
+        wx.navigateToMiniProgram({
+            appId: 'wx11a23be8fd1b03f3',
+            success(res) {
+                // 打开成功
+            }
         })
     },
     answer(answer) {
@@ -90,8 +95,14 @@ Page({
         //     console.log('updateQuestion res => ', res)
         // })
     },
+  
     handleQuestions(questions) {
         return this.listDataFormat(questions)
+    },
+    tocreate() {
+      wx.navigateTo({
+        url: '../create/create'
+      });
     },
 
     pageToCreate: Util.throttle(function() {

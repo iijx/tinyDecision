@@ -4,9 +4,15 @@
 	<!-- <view style="opacity: {{info.isResolved ? 1 : 0}}" class="resolvedTime">( {{computed.showResolvedTime(info.resolvedAt)}} )</view> -->
 	<turnable wx:if="{{ !!info.id }}" info="{{ info }}" bindanswer="answer" />
 
+	<button class="share-btn" open-type="share" size="mini">让TA选</button>
 	<view class="text-right">
-		<button class="share-btn" open-type="share" size="mini">让TA选</button>
+	  <button class="create-btn" type="primary" bindtap="tocreate" size="mini">+新建</button>
 	</view>
+
+    <!-- 添加按钮 -->
+    <view class="shuting-btn-wrap" bindtap="toShuting">数听英语</view>
+    <!-- banner广告 -->
+  <ad unit-id="adunit-8bf619fa9e81416d"></ad>
 </view>
 
 <wxs module="computed">

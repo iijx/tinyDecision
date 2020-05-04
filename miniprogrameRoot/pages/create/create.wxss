@@ -1,6 +1,14 @@
 .container {
     padding: 60rpx 18rpx;
 }
+.title {
+    font-size:14px;line-height:1;color:#1c2438;padding:20px 16px 10px
+}
+
+.title2 {
+    font-size:12px;line-height:1;color:#999;padding:10px 16px 10px
+}
+
 .input-wrap {
     background: #fff;
     height: 86rpx;

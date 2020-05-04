@@ -1,12 +1,13 @@
 <view class="container">
+    <view class="title">填写问题与选项</view>
     <form report-submit="true" bindsubmit="submit">
         <view class="input-wrap question">
             <image class="icon" src="/assets/imgs/icon-question.png" />
-            <input class="input" value="{{title}}" bindinput="titleInput" placeholder="问题"/>
+            <input class="input" value="{{title}}" bindinput="titleInput" placeholder="填写问题"/>
         </view>
         <view class="input-wrap" wx:for="{{options}}" wx:key="{{ index + '-' + item }}">
             <image class="icon" src="/assets/imgs/icon-option.png" />
-            <input class="input" value="{{item}}" bindinput="optionInput" data-index="{{index}}" name="" placeholder="{{'选项 ' + (index+ 1)}}"/>
+            <input class="input" value="{{item}}" bindinput="optionInput" data-index="{{index}}" name="" placeholder="{{'填写选项 ' + (index+ 1)}}"/>
         </view>
         <i-button bind:click="addOption" type="ghost" size="small" long inline >加选项</i-button>
         <view style="margin-bottom: 44rpx;"></view>
@@ -19,8 +20,12 @@
             </i-cell>
         </i-cell-group>
         <!-- 提交按钮 -->
-        <button type="primary" class="submit-btn" form-type="submit" disabled="{{!canSubmit}}" 
-                loading="{{submitLoading}}" > {{ computed.createText(createType) }} </button>
+        <button type="primary" class="submit-btn" form-type="submit" disabled="{{!canSubmit}}" loading="{{submitLoading}}" > {{ computed.createText(createType) }} </button>
+        <view class="title2" style="text-align: center;">第一次创建可能会有广告，后续不再出现</view>
+        <!-- 视频广告 -->
+        <!-- <view style="height: 32rpx;"/> -->
+        <ad unit-id="adunit-737c202ab29c30a3" ad-type="video" ad-theme="white"></ad>
+
     </form>
 </view>
 

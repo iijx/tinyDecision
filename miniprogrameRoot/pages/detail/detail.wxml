@@ -13,9 +13,15 @@
     </view> -->
     
     <button class="share-btn" open-type="share" size="mini">让TA选</button>
+	<view class="text-right">
+	  <button class="create-btn" type="primary" bindtap="tocreate" size="mini">+新建</button>
+	</view>
+    <view style="margin-top: 20rpx;"></view>
     <button wx:if="{{isShowIndexbtn}}" class="index-btn" bindtap="pageToIndex" open-type="ghost" size="mini">回首页</button>
-    <view style="margin-top: 100rpx"></view>
     <ad unit-id="adunit-8bf619fa9e81416d"></ad>
+
+    <!-- 添加按钮 -->
+    <view class="shuting-btn-wrap" bindtap="toShuting">数听英语</view>
 </view>
 
 <wxs module="computed">

@@ -1,6 +1,9 @@
 import cloudRequest from "../../util/cloudRequest";
 
 const { Api, Storer, Util, XData, DataTransform,CloudRequest } = getApp();
+// 在页面中定义激励视频广告
+let videoAd = null
+// let firstVideoAd = true;
 
 Page({
     staticData: {
@@ -16,6 +19,38 @@ Page({
     onLoad(opt = {}) {
         console.log('create opt =>', opt);
         this.typeInit(opt );
+        // 在页面中定义插屏广告
+        let interstitialAd = null
+
+        // 在页面onLoad回调事件中创建插屏广告实例
+        if (wx.createInterstitialAd) {
+            interstitialAd = wx.createInterstitialAd({
+                adUnitId: 'adunit-a6437bcca1ea2619'
+            })
+            interstitialAd.onLoad(() => { })
+            interstitialAd.onError((err) => { })
+            interstitialAd.onClose(() => { })
+        }
+
+        // 在适合的场景显示插屏广告
+        if (interstitialAd) {
+            interstitialAd.show().catch((err) => {
+                console.error(err)
+            })
+        }
+
+
+        // 在页面onLoad回调事件中创建激励视频广告实例
+        if (wx.createRewardedVideoAd) {
+            videoAd = wx.createRewardedVideoAd({
+                adUnitId: 'adunit-4c672997dfa8bc46'
+            })
+            videoAd.onLoad(() => { })
+            videoAd.onError((err) => { })
+        }
+
+        
+      
     },
     typeInit(opt) {
         let _type = opt.type || '';
@@ -95,6 +130,7 @@ Page({
         })
     },
     _createQuestion() {
+        
         Api.createQuestion({
             title: this.data.title,
             options: Util.iFilter(this.data.options, item => item !== ''),
@@ -174,6 +210,33 @@ Page({
         })
     },
     submit(e) {
+        // // 第一次点击加入视频广告
+        // if (firstVideoAd) {
+        //     // 用户触发广告后，显示激励视频广告
+        //     if (videoAd) {
+        //         videoAd.show().catch(() => {
+        //             // 失败重试
+        //             videoAd.load()
+        //                 .then(() => videoAd.show())
+        //                 .catch(err => {
+        //                     console.log('激励视频 广告显示失败')
+        //                 })
+        //         })
+
+        //         rewardedVideoAd.onClose(res => {
+        //             // 用户点击了【关闭广告】按钮
+        //             if (res && res.isEnded) {
+        //                 // 正常播放结束，可以下发游戏奖励
+        //             } else {
+        //                 // 播放中途退出，不下发游戏奖励
+        //             }
+        //         })
+        //     }
+        //     firstVideoAd = false;
+        //     return;
+        // }
+
+
         let formId = e.detail.value;
         this.setData({ submitLoading: true });
 

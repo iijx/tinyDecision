@@ -35,5 +35,8 @@
         <!--<view class="operator" bindtap="wait">高级设置</view>-->
     </view>
 
+    <!-- 添加按钮 -->
+    <view class="shuting-btn-wrap" bindtap="toShuting">数听英语</view>
+
 
 </view>

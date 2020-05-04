@@ -15,7 +15,6 @@ Page({
     },
   
     onLoad() {
-        // wx.showLoading({ title: '加载中'})
         // Api.get
         // CloudRequest.getQuestionList().then(res => {
         //     let data = res.data.map(DataTransform.question_back2front);
@@ -36,6 +35,9 @@ Page({
                 list: this.listDataFormat(questions)
             })
         })
+
+
+        
     },
     handleQuestions(questions) {
         return this.listDataFormat(questions)
@@ -79,8 +81,6 @@ Page({
             }
         });
         return retArr;
-    },
-    onShow: function() {
     },
     itemClick(e) {
         console.log(e)

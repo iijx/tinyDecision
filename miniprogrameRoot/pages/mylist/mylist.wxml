@@ -2,25 +2,29 @@
 	<view class="users-list-wrap">
 		<view class="list-wrap">
 			<!-- 日期列表 -->
-			<view class="item1" wx:for="{{list}}" wx:key="item1-{{index}}" wx:for-index="i">
-				<view class="date">{{computed.delYear(item.showTime)}}</view>
-				<!-- 单日列表 -->
-				<view class="qs-item-wrap" wx:for="{{item.list}}" wx:key="{{item.id}}" wx:for-index="j" bindtap="itemClick" data-i="{{i}}" data-j="{{j}}">
-					<view class="qs">
-						<view class="left-line" style="background: {{ computed.isResolved(item.maxLotteryTimes, item.lotteriedTimes) ? '#52c41a': '#ffec3d'}}"></view>
-						<view class="question">{{item.question}}</view>
-					</view>
-					<!-- <view wx:if="{{ item.resolvedValue }}" class="answer" wx:id="computed.isResolved(item.maxLotteryTimes, item.lotteriedTimes)">{{ item.resolvedValue }}</view> -->
-				</view>
-			</view>
+            <block wx:for="{{list}}" wx:key="item1-{{index}}" wx:for-index="i">
+                <!-- banner广告 -->
+                <ad wx:if="{{i === 2}}" unit-id="adunit-8bf619fa9e81416d"></ad>
+                <view class="item1">
+                    <view class="date">{{computed.delYear(item.showTime)}}</view>
+                    <!-- 单日列表 -->
+                    <view class="qs-item-wrap" wx:for="{{item.list}}" wx:key="{{item.id}}" wx:for-index="j" bindtap="itemClick" data-i="{{i}}" data-j="{{j}}">
+                        <view class="qs">
+                            <view class="left-line" style="background: {{ computed.isResolved(item.maxLotteryTimes, item.lotteriedTimes) ? '#52c41a': '#ffec3d'}}"></view>
+                            <view class="question">{{item.question}}</view>
+                        </view>
+                    </view>
+                </view>
+            </block>
 			<!-- 今天暂无 -->
 		</view>
     </view>
     
     <!-- 添加按钮 -->
-    <view class="add-btn-wrap" bindtap="tocreate">+</view>
+    <view class="shuting-btn-wrap" bindtap="toShuting">数听英语</view>
 
-    
+    <!-- 添加按钮 -->
+    <view class="add-btn-wrap" bindtap="tocreate">+</view>
 </view>
 
 <wxs module="computed">

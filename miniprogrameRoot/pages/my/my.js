@@ -18,6 +18,15 @@ Page({
     pageToAccount: Util.throttle(() => {
         wx.navigateTo({ url: '../account/account'})
     }, 500),
+
+    toShuting() {
+        wx.navigateToMiniProgram({
+            appId: 'wx11a23be8fd1b03f3',
+            success(res) {
+                // 打开成功
+            }
+        })
+    },
     
     onShareAppMessage: function (res) {
         return {
